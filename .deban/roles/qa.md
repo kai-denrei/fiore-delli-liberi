@@ -14,6 +14,9 @@ Validation of transcription accuracy, segmentation correctness, and output compl
 | Date | Decision | Rationale | Linked roles |
 |---|---|---|---|
 | 2026-04-07 | OCR quality bar: first-pass usable, cross-referencing with scholarly editions deferred | All 8 agents flagged paleographic uncertainty, especially fol. 35r+. Acceptable for "clean text references for every page" goal. Scholarly accuracy requires cross-referencing with Novati, Mondschein, Leoni editions — not blocked on this. | [[dev]], [[pm]] |
+| 2026-04-07 | Grappling section QA: OCR translations NOT usable as primary for illustration pages | Detailed comparison written to `data/qa_grappling_comparison.md`. Guard names: 1/4 correct. Technique instructions garbled. Tactical branching logic lost. Hatcher/Chidester made primary. OCR demoted to "Raw OCR" tab. | [[dev]] |
+| 2026-04-07 | AI fabrication audit: 3 instances caught by human review | 1) "prese d'amore" presented as Getty term (PD only). 2) Quotes from different folios stitched into false unified argument. 3) "Three tiers of violence" framework invented, oversimplifying Fiore's actual vocabulary. All corrected. Every quote now has source-link verification. Search feature added specifically for this purpose. | [[dev]], [[pm]] |
+| 2026-04-07 | Source-link verification: every quoted passage in lexicon/analysis hyperlinked to folio+tab | Clicking a quote navigates to the manuscript viewer, switches to correct tab, highlights the passage. Human insisted on this after catching fabrications. The search bar made permanent for the same reason. | [[ux]] |
 
 ## Dead Ends
 <!-- APPEND ONLY. Never delete. -->
@@ -40,5 +43,6 @@ Feeds into: [[pm]] (quality gates)
 
 ## Session Log
 <!-- One line per session, newest first -->
+2026-04-07 — SYNC — QA complete. OCR unreliable for illustrations (dead end). 3 AI fabrication instances caught and corrected. Source-link verification added to all quotes. Search made permanent. Grappling comparison report at data/qa_grappling_comparison.md. About page documents all caveats.
 2026-04-07 — SYNC — 92 folio transcriptions produced. Quality bar set: first-pass usable, correction via cross-referencing deferred. Later folios (35r+) flagged as lower confidence. Folio 38 misbinding correctly noted in output.
 2026-04-07 — INIT — role created, 4 open questions on validation strategy

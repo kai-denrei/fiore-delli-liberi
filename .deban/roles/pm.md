@@ -15,6 +15,9 @@ Project scope, milestones, priorities, and risk tracking. Owns the implementatio
 |---|---|---|---|
 | 2026-04-07 | MVP scope: Getty MS only, no multi-MS collation, no English translation | Keep scope tight. Collation and Anki export listed as future extensions. | [[arch]], [[dev]] |
 | 2026-04-07 | Scope expanded: English translations now included per folio | Gerald's intermediary goal is "translations for every page in one place." This changes the MVP — translation is no longer a future extension. The cleaned files already contain translations from the Claude vision OCR pass. | [[dev]], [[ux]] |
+| 2026-04-07 | Project reframed: from transcription pipeline to GrapplingPrimitives history page | The original brief described a data pipeline outputting .txt/.json/.md. Gerald redirected to an interactive reader as the Fiore node on a grappling history timeline. Pipeline tools become build scripts, not the deliverable. | [[arch]], [[ux]] |
+| 2026-04-07 | Pisani Dossi MS (1409) added as second manuscript | Same author, dated 1409, shorter redaction. Uses different vocabulary (d'amore vs solaço). Full scan set (72 pages) acquired from Wiktenauer/Novati facsimile. Cross-navigation between Getty and PD equivalents. | [[dev]], [[arch]] |
+| 2026-04-07 | GitHub repo created and deployed: kai-denrei/fiore-delli-liberi | GitHub Pages serves the static reader. WebP images (17MB Getty + PD) in repo, full-res originals gitignored. Public repo. | [[devops]] |
 
 ## Dead Ends
 <!-- APPEND ONLY. Never delete. -->
@@ -41,5 +44,6 @@ Feeds into: all roles
 
 ## Session Log
 <!-- One line per session, newest first -->
+2026-04-07 — SYNC — Project shipped to GitHub Pages. Reframed from pipeline to interactive reader. PD manuscript added. About page documenting tools, AI fabrication issues, and lessons learned. Deployed at kai-denrei.github.io/fiore-delli-liberi.
 2026-04-07 — SYNC — Scope expanded to include translations. 2 open questions resolved (OCR sequencing, Transkribus trigger). Brief's pipeline collapsed from 5 steps. 92 folios transcribed+translated in one pass.
 2026-04-07 — INIT — role created, 5 open questions surfaced from brief gaps

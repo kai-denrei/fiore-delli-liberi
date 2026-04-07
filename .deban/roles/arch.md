@@ -20,6 +20,10 @@ Pipeline design, data schema, file/directory structure, and technology choices. 
 | 2026-04-07 | Directory structure: `data/raw/images/` for Getty folio JPEGs | Matches brief's project structure. Images are the raw input for OCR pipeline. | [[dev]], [[devops]] |
 | 2026-04-07 | Cleaned text output: `data/cleaned/fol_NNx.md` — one markdown per folio with Transcription/Translation/Notes | 1:1 mapping with source images. Each file is self-contained. Blank pages included for completeness. This is the intermediate format between raw images and final segmented JSON. | [[dev]], [[ux]] |
 | 2026-04-07 | OCR approach changed: Claude vision instead of Kraken/Transkribus pipeline | The brief's OCR toolchain (Kraken + Zenodo model, Transkribus fallback) was bypassed. Claude vision reads medieval script and translates in a single pass. This collapses Steps 1-3 of the brief's pipeline into a single step. Trade-off: less paleographically rigorous than a trained HTR model, but produces usable first-pass results immediately. | [[dev]], [[qa]] |
+| 2026-04-07 | Final deliverable: static single-page reader, not the brief's three-file export (.txt/.json/.md) | The GrapplingPrimitives history page goal replaced the original brief's deliverables. Single HTML file with data.json, deployed to GitHub Pages. No build step, no framework. | [[dev]], [[ux]], [[pm]] |
+| 2026-04-07 | 5-tab navigation: Manuscript, Lexicon, Analysis, Amore, About | Manuscript contains Getty/PD dual viewer. Lexicon and Analysis separated from Manuscript for cleaner reading. Amore tab for cross-manuscript vocabulary comparison. Alternative considered: single scrolling page — rejected because it mixed browsing (folio viewer) with reading (lexicon/analysis). | [[ux]] |
+| 2026-04-07 | Dual-manuscript viewer sharing one layout container | Getty and PD render in same div, same image size (1200x1727), same grid. Switching swaps content in place. PD images padded to match Getty dimensions. Section nav shared with strikethrough for missing sections. Eliminates layout jump. | [[ux]], [[dev]] |
+| 2026-04-07 | All translation tabs always visible, strikethrough when unavailable | 6 tabs for Getty (Hatcher, Chidester, Hatcher PD, PD Italian, Getty Italian, Raw OCR), 2 for PD. Unavailable tabs disabled+struck through. Blank pages show same tab bar. No layout jump between folios. | [[ux]] |
 
 ## Dead Ends
 <!-- APPEND ONLY. Never delete. -->
@@ -44,6 +48,7 @@ Feeds into: [[dev]], [[qa]]
 
 ## Session Log
 <!-- One line per session, newest first -->
+2026-04-07 — SYNC — Final architecture: 5-tab static reader on GitHub Pages. Dual MS viewer (Getty/PD), 6 translation sources, full-text search, lexicon, sentiment analysis, Amore comparison tab. Brief's original 3-file export plan replaced entirely. Deployed to kai-denrei.github.io/fiore-delli-liberi.
 2026-04-07 — SYNC — Full OCR complete via Claude vision. Pipeline architecture changed: brief's 5-step plan collapsed. Kraken/Transkribus bypassed. New intermediate format: data/cleaned/*.md. Accuracy assumption partially validated but needs cross-referencing.
 2026-04-07 — SYNC — IIIF manifest structure confirmed (v2, 94 canvases). Image download path and naming convention decided. fol. 40v absent — noted as physical MS blank.
 2026-04-07 — INIT — role created, initial architecture decisions recorded from brief
