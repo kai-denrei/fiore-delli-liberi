@@ -1080,13 +1080,27 @@
     function buildSectionNav(ms) {
       const nav = document.getElementById('sectionNav');
       nav.innerHTML = '';
-      const sections = ms === 'pd' ? PD_SECTIONS : SECTIONS;
-      const sectionNames = Object.keys(sections);
-      sectionNames.forEach(name => {
+      // Use the canonical Getty section order as the master list
+      const allNames = Object.keys(SECTIONS);
+      // Add any PD-only sections
+      Object.keys(PD_SECTIONS).forEach(name => {
+        if (!allNames.includes(name)) allNames.push(name);
+      });
+
+      const activeSections = ms === 'pd' ? PD_SECTIONS : SECTIONS;
+
+      allNames.forEach(name => {
         const btn = document.createElement('button');
+        const hasContent = activeSections[name] && activeSections[name].length > 0;
         btn.textContent = name;
+        if (!hasContent) {
+          btn.style.textDecoration = 'line-through';
+          btn.style.opacity = '0.4';
+          btn.disabled = true;
+        }
         btn.addEventListener('click', () => {
-          const firstFolio = sections[name][0];
+          if (!hasContent) return;
+          const firstFolio = activeSections[name][0];
           if (ms === 'pd') {
             const idx = PD_FOLIOS.findIndex(f => f.id === firstFolio);
             if (idx >= 0) showPdFolio(idx);
