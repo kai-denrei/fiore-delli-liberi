@@ -177,8 +177,17 @@ def main():
             "with_hatcher": sum(1 for f in folios if f.get("hatcher")),
             "with_chidester": sum(1 for f in folios if f.get("chidester")),
             "pd_folios": len(pd_folios),
-        }
+        },
+        "getty_to_pd": {g: pds for g, pds in sorted({
+            f["getty_equiv"]: [] for f in pd_folios if f.get("getty_equiv")
+        }.items())},
     }
+    # Build getty_to_pd properly
+    g2pd = {}
+    for f in pd_folios:
+        if f.get("getty_equiv"):
+            g2pd.setdefault(f["getty_equiv"], []).append(f["id"])
+    output["getty_to_pd"] = g2pd
 
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False))
     print(f"Written: {OUTPUT}")

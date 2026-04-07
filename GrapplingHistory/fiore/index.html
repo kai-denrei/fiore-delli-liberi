@@ -1065,6 +1065,7 @@
         FOLIOS = DATA.folios;
         SECTIONS = DATA.sections;
         PD_FOLIOS = DATA.pd_folios || [];
+        GETTY_TO_PD = DATA.getty_to_pd || {};
         buildSectionNav();
         buildFolioStrip();
         buildPdFolioStrip();
@@ -1148,6 +1149,7 @@
           <div class="folio-heading">
             Folio ${fol.id}
             ${fol.section ? `<span class="section-tag">${fol.section}</span>` : ''}
+            ${GETTY_TO_PD[fol.id] ? `<span class="section-tag" style="cursor:pointer;" onclick="document.querySelector('[data-ms=pd]').click(); const pi=PD_FOLIOS.findIndex(f=>f.id==='${GETTY_TO_PD[fol.id][0]}'); if(pi>=0) showPdFolio(pi);">PD ${GETTY_TO_PD[fol.id].join(', ')}</span>` : ''}
           </div>
 
           <div class="translation-tabs" id="transTabs">
@@ -1266,13 +1268,33 @@
 
     // ── Manuscript switcher ─────────────────────────
     let activeMs = 'getty';
+    let GETTY_TO_PD = {};
+
     document.querySelectorAll('#msSwitcher button').forEach(btn => {
       btn.addEventListener('click', () => {
-        activeMs = btn.dataset.ms;
+        const newMs = btn.dataset.ms;
+        const wasMs = activeMs;
+        activeMs = newMs;
         document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.ms-panel').forEach(p => p.classList.remove('active'));
         document.getElementById('ms-' + activeMs).classList.add('active');
+
+        // Cross-navigate to equivalent folio
+        if (wasMs === 'getty' && newMs === 'pd') {
+          const gettyId = FOLIOS[currentFolio]?.id;
+          const pdIds = GETTY_TO_PD[gettyId];
+          if (pdIds && pdIds.length > 0) {
+            const pdIdx = PD_FOLIOS.findIndex(f => f.id === pdIds[0]);
+            if (pdIdx >= 0) showPdFolio(pdIdx);
+          }
+        } else if (wasMs === 'pd' && newMs === 'getty') {
+          const pdFol = PD_FOLIOS[currentPdFolio];
+          if (pdFol?.getty_equiv) {
+            const gettyIdx = FOLIOS.findIndex(f => f.id === pdFol.getty_equiv);
+            if (gettyIdx >= 0) showFolio(gettyIdx);
+          }
+        }
       });
     });
 
@@ -1320,7 +1342,7 @@
         <div class="text-panel">
           <div class="folio-heading">
             Carta ${fol.id}
-            ${fol.getty_equiv ? `<span class="section-tag">≈ Getty ${fol.getty_equiv}</span>` : ''}
+            ${fol.getty_equiv ? `<span class="section-tag" style="cursor:pointer;" onclick="document.querySelector('[data-ms=getty]').click(); const gi=FOLIOS.findIndex(f=>f.id==='${fol.getty_equiv}'); if(gi>=0) showFolio(gi);">≈ Getty ${fol.getty_equiv}</span>` : ''}
           </div>
 
           <div class="translation-tabs" id="pdTransTabs">
