@@ -134,17 +134,49 @@ def main():
                 sections_index[section] = []
             sections_index[section].append(fol_id)
 
+    # Build PD folio list
+    pd_data = json.loads(PD_ITALIAN_JSON.read_text()) if PD_ITALIAN_JSON.exists() else {}
+    pd_map = pd_data.get("pd_to_getty_map", {})
+    pd_folios_raw = sorted(
+        set(pd_map.keys()),
+        key=lambda f: (int(re.search(r'(\d+)', f).group(1)), 0 if f.endswith('a') else 1)
+    )
+    pd_folios = []
+    for pf in pd_folios_raw:
+        getty_equiv = pd_map.get(pf)
+        texts = []
+        # Find PD Italian text for this folio
+        if getty_equiv and getty_equiv in pd_italian:
+            # Filter to passages from this specific PD folio
+            for entry in pd_data.get("by_getty_folio", {}).get(getty_equiv, []):
+                if entry.get("pd_folio") == pf:
+                    texts.append(entry["text"])
+        # Find PD Hatcher translation
+        hatcher = []
+        for p in wiki_data.get("passages", []):
+            if p.get("folio") == getty_equiv and p.get("pisani_dossi_hatcher"):
+                hatcher.append(p["pisani_dossi_hatcher"])
+
+        pd_folios.append({
+            "id": pf,
+            "getty_equiv": getty_equiv,
+            "italian": texts,
+            "hatcher": hatcher,
+        })
+
     output = {
         "title": "Fior di Battaglia — MS Ludwig XV 13",
         "author": "Fiore dei Liberi",
         "date": "c. 1410",
         "folios": folios,
         "sections": sections_index,
+        "pd_folios": pd_folios,
         "stats": {
             "total_folios": len(folios),
             "blank": sum(1 for f in folios if f.get("blank")),
             "with_hatcher": sum(1 for f in folios if f.get("hatcher")),
             "with_chidester": sum(1 for f in folios if f.get("chidester")),
+            "pd_folios": len(pd_folios),
         }
     }
 

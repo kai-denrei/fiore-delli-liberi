@@ -672,6 +672,51 @@
     .search-hit { background: rgba(139, 69, 19, 0.2); }
     .search-hit-current { background: rgba(139, 69, 19, 0.45); }
 
+    /* ── Manuscript Switcher ──────────────────────── */
+    .ms-switcher {
+      display: flex;
+      gap: 0;
+      margin-bottom: var(--md);
+    }
+    .ms-switcher button {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: var(--sm) var(--lg);
+      background: var(--bg-panel);
+      border: 1px solid var(--rule);
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ms-switcher button:first-child { border-radius: 4px 0 0 4px; }
+    .ms-switcher button:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+    .ms-switcher button.active {
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
+    }
+
+    .ms-panel { display: none; }
+    .ms-panel.active { display: block; }
+
+    .detail-figure {
+      margin: var(--lg) 0;
+      max-width: 100%;
+    }
+    .detail-figure img {
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+    }
+    .detail-figure figcaption {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--fg-faint);
+      margin-top: var(--xs);
+      line-height: 1.4;
+    }
+
     /* ── Responsive ─────────────────────────────────── */
     @media (max-width: 768px) {
       .page { padding: var(--lg) var(--md); }
@@ -956,16 +1001,39 @@
         </p>
       </div>
     
-    <!-- ── Section Nav ─────────────────────────── -->
-    <nav class="section-nav" id="sectionNav"></nav>
+    <!-- ── Manuscript Switcher ──────────────────── -->
+    <div class="ms-switcher" id="msSwitcher">
+      <button class="active" data-ms="getty">Getty MS Ludwig XV 13 (c. 1400s)</button>
+      <button data-ms="pd">Pisani Dossi MS (1409)</button>
+    </div>
 
-    <!-- ── Folio Strip ─────────────────────────── -->
-    <div class="folio-strip" id="folioStrip"></div>
+    <!-- ── Getty Panel ─────────────────────────── -->
+    <div class="ms-panel active" id="ms-getty">
+      <nav class="section-nav" id="sectionNav"></nav>
+      <div class="folio-strip" id="folioStrip"></div>
+      <div class="zoom-overlay" id="zoomOverlay"></div>
+      <div class="folio-viewer" id="folioViewer">
+        <div class="loading">Loading manuscript data&hellip;</div>
+      </div>
+    </div>
 
-    <!-- ── Viewer ──────────────────────────────── -->
-    <div class="zoom-overlay" id="zoomOverlay"></div>
-    <div class="folio-viewer" id="folioViewer">
-      <div class="loading">Loading manuscript data&hellip;</div>
+    <!-- ── Pisani Dossi Panel ──────────────────── -->
+    <div class="ms-panel" id="ms-pd">
+      <p class="analysis-intro">
+        The Pisani Dossi MS (dated February 10, 1409) is a shorter, more condensed redaction by the same author, Fiore dei Liberi. Dedicated to Niccol&ograve; III d'Este. 36 folios vs. the Getty's 47. The images below are from Novati's 1902 facsimile. Where the Getty uses <em>sola&ccedil;o</em> ("pleasure") for cooperative grappling, the Pisani Dossi uses <em>d'amore</em> ("of love") &mdash; a different word choice that may reflect evolving thought across the decade separating the manuscripts.
+      </p>
+
+      <figure class="detail-figure" style="max-width: 640px;">
+        <img src="images/pd_02a_damore_detail.webp" alt="Detail of carta 2a showing 'le prese se fa d'amore e non da ira'">
+        <figcaption>
+          Carta 2a, right column: <em>&ldquo;Che zoghi ch se piglia de concordia le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>. E sopra l'arte de la bra&ccedil;ar che se fa a guadagnar le prese tal volta se fa da ira e alguna volta <strong>per la vita</strong>&rdquo;</em> &mdash; Three distinct terms in the original hand: d'amore, da ira, per la vita.
+        </figcaption>
+      </figure>
+
+      <div class="folio-strip" id="pdFolioStrip"></div>
+      <div class="folio-viewer" id="pdFolioViewer">
+        <div class="loading">Loading Pisani Dossi data&hellip;</div>
+      </div>
     </div>
 
     <!-- ── Coda ────────────────────────────────── -->
@@ -995,9 +1063,12 @@
         DATA = await resp.json();
         FOLIOS = DATA.folios;
         SECTIONS = DATA.sections;
+        PD_FOLIOS = DATA.pd_folios || [];
         buildSectionNav();
         buildFolioStrip();
+        buildPdFolioStrip();
         showFolio(0);
+        if (PD_FOLIOS.length > 0) showPdFolio(0);
       } catch (e) {
         document.getElementById('folioViewer').innerHTML =
           '<div class="loading">Failed to load data. Run build_data.py first.</div>';
@@ -1192,6 +1263,111 @@
       }
     });
 
+    // ── Manuscript switcher ─────────────────────────
+    let activeMs = 'getty';
+    document.querySelectorAll('#msSwitcher button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeMs = btn.dataset.ms;
+        document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.ms-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('ms-' + activeMs).classList.add('active');
+      });
+    });
+
+    // ── PD Folio Browser ─────────────────────────
+    let PD_FOLIOS = [];
+    let currentPdFolio = 0;
+
+    function buildPdFolioStrip() {
+      const strip = document.getElementById('pdFolioStrip');
+      if (!strip || !PD_FOLIOS.length) return;
+      strip.innerHTML = '';
+      PD_FOLIOS.forEach((fol, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = fol.id;
+        btn.dataset.idx = idx;
+        btn.addEventListener('click', () => showPdFolio(idx));
+        strip.appendChild(btn);
+      });
+    }
+
+    function showPdFolio(idx) {
+      currentPdFolio = idx;
+      const fol = PD_FOLIOS[idx];
+      const viewer = document.getElementById('pdFolioViewer');
+
+      // Update strip
+      document.querySelectorAll('#pdFolioStrip button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+      const activeBtn = document.querySelector(`#pdFolioStrip button[data-idx="${idx}"]`);
+      if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+      const imgSrc = `images/pd_${fol.id}.webp`;
+      const hasItalian = fol.italian && fol.italian.length > 0;
+      const hasHatcher = fol.hatcher && fol.hatcher.length > 0;
+
+      viewer.innerHTML = `
+        <div class="folio-image-wrap">
+          <img src="${imgSrc}" alt="Pisani Dossi carta ${fol.id}" id="pdFolioImg" loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display:none; padding: var(--xl); text-align: center; color: var(--fg-faint); font-family: var(--font-ui); font-size: 0.85rem;">
+            Image not yet available for carta ${fol.id}
+          </div>
+          <div class="folio-label">Pisani Dossi — Carta ${fol.id}${fol.getty_equiv ? ` (≈ Getty fol. ${fol.getty_equiv})` : ''}</div>
+        </div>
+        <div class="text-panel">
+          <div class="folio-heading">
+            Carta ${fol.id}
+            ${fol.getty_equiv ? `<span class="section-tag">≈ Getty ${fol.getty_equiv}</span>` : ''}
+          </div>
+
+          <div class="translation-tabs" id="pdTransTabs">
+            ${hasItalian ? '<button class="active" data-tab="pd-it">Pisani Dossi (Italian)</button>' : ''}
+            ${hasHatcher ? `<button ${!hasItalian ? 'class="active"' : ''} data-tab="pd-en">Hatcher (English)</button>` : ''}
+          </div>
+
+          ${hasItalian ? `
+          <div class="tab-content ${hasItalian ? 'active' : ''}" id="tab-pd-it">
+            <div class="italian-text">${fol.italian.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>
+          </div>` : ''}
+
+          ${hasHatcher ? `
+          <div class="tab-content ${!hasItalian ? 'active' : ''}" id="tab-pd-en">
+            <div class="translation-text">${fol.hatcher.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>
+          </div>` : ''}
+
+          ${!hasItalian && !hasHatcher ? '<div class="no-translation">No transcription available for this folio yet.</div>' : ''}
+
+          <div class="folio-nav">
+            <button ${idx === 0 ? 'disabled' : ''} onclick="showPdFolio(${idx - 1})">&larr; Previous</button>
+            <span class="current-label">${fol.id}</span>
+            <button ${idx === PD_FOLIOS.length - 1 ? 'disabled' : ''} onclick="showPdFolio(${idx + 1})">Next &rarr;</button>
+          </div>
+        </div>`;
+
+      // Tab switching for PD
+      document.querySelectorAll('#pdTransTabs button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#pdTransTabs button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('#pdFolioViewer .tab-content').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+      });
+
+      // Image zoom for PD
+      const img = document.getElementById('pdFolioImg');
+      const overlay = document.getElementById('zoomOverlay');
+      if (img) {
+        img.addEventListener('click', () => {
+          img.classList.toggle('zoomed');
+          overlay.classList.toggle('visible');
+        });
+      }
+    }
+
     // ── Full-text search ───────────────────────────
     const searchBar = document.getElementById('searchBar');
     const searchInput = document.getElementById('searchInput');
@@ -1250,7 +1426,7 @@
         return;
       }
 
-      // Search across all folios, all text fields
+      // Search across all folios (Getty + PD), all text fields
       FOLIOS.forEach((fol, idx) => {
         if (fol.blank) return;
         const fields = [
