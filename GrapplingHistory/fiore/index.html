@@ -718,6 +718,7 @@
         <button class="active" data-panel="manuscript">Manuscript</button>
         <button data-panel="lexicon">Lexicon</button>
         <button data-panel="analysis">Analysis</button>
+        <button data-panel="amore">Amore</button>
         <button data-panel="about">About</button>
       </div>
       <div class="nav-search">
@@ -746,11 +747,6 @@
         </div>
       </div>
 
-      <!-- ── Lead ────────────────────────────────── -->
-      <p class="lead">
-        Written around 1400 by the knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise, covering both unarmed and armed grappling across 47 folios of illustrated instruction.
-      </p>
-
       <!-- ── Manuscript Switcher ──────────────────── -->
       <div class="ms-switcher" id="msSwitcher">
         <button class="active" data-ms="getty">Getty (c. 1400s)</button>
@@ -769,6 +765,11 @@
       <div class="folio-viewer" id="folioViewer">
         <div class="loading">Loading manuscript data...</div>
       </div>
+
+      <!-- ── Lead (below viewer) ────────────────── -->
+      <p class="lead" style="margin-top: var(--lg);">
+        Written around 1400 by the knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise, covering both unarmed and armed grappling across 47 folios of illustrated instruction.
+      </p>
 
       <!-- ── d'amore Detail (below viewer, PD only) -->
       <figure class="detail-figure" id="pdDetailFigure" style="max-width: 640px; margin-top: var(--xl); display: none;">
@@ -1052,7 +1053,130 @@
   </div>
 
   <!-- ══════════════════════════════════════════════ -->
-  <!-- ── Panel 4: About ─────────────────────────── -->
+  <!-- ── Panel 4: Amore ──────────────────────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel" id="panel-amore">
+    <div class="page">
+
+      <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: var(--sm);">The Amore Question</h2>
+      <p class="analysis-intro">
+        The same author, writing the same passage about grappling, uses different words across two manuscripts separated by roughly a decade. Comparing the Getty (c. 1400s) and Pisani Dossi (dated 1409) reveals a vocabulary shift that may reflect evolving thought about the nature of cooperative practice.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid var(--rule); margin: var(--lg) 0;">
+
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">Getty MS Ludwig XV 13 (c. 1400s) &mdash; Folio 2r</h3>
+
+      <div class="epigraph" style="margin: var(--md) 0 var(--lg);">
+        <blockquote>
+          E comi&ccedil;emo al bra&ccedil;are. L'oquale sie di <strong>dua razone</strong>: come da <strong>sola&ccedil;o</strong> e di <strong>ira</strong>, coe per la uita cu ogni inganno e falsita e crudelita che si po fare.
+        </blockquote>
+        <div class="attribution">
+          "And we begin with grappling. Which is of <strong>two kinds</strong>: one from <strong>pleasure</strong>, and one from <strong>anger</strong> &mdash; that is, for one's life, with every cunning and deception and cruelty that can be done."
+          <br><a class="src-link" data-folio="02r" data-tab="italian" data-search="come da solaço e di ira">View in manuscript &rarr;</a>
+        </div>
+      </div>
+
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--xl);">
+        The Getty frames grappling as a binary: <em>sola&ccedil;o</em> (pleasure, amusement) vs. <em>ira</em> (anger). Two kinds, <em>dua razone</em>. The word <em>sola&ccedil;o</em> suggests entertainment or recreation &mdash; something done for enjoyment.
+      </p>
+
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">Pisani Dossi MS (February 10, 1409) &mdash; Carta 2a</h3>
+
+      <figure class="detail-figure" style="max-width: 640px; margin-bottom: var(--lg);">
+        <img src="images/pd_02a_damore_detail.webp" alt="Detail: le prese se fa d'amore e non da ira">
+        <figcaption style="font-family: var(--font-ui); font-size: 0.72rem; color: var(--fg-faint); line-height: 1.4; margin-top: var(--xs);">
+          Close-up of carta 2a, right column. Novati 1902 facsimile of the 1409 manuscript.
+        </figcaption>
+      </figure>
+
+      <div class="epigraph" style="margin: var(--md) 0 var(--lg);">
+        <blockquote>
+          Che zoghi ch<span style="text-decoration:underline">e</span> se piglia de <strong>concordia</strong> le prese se fa <strong>d'amore</strong> e no<span style="text-decoration:underline">n</span> da <strong>ira</strong>, E sopra l'arte dela bra&ccedil;ar che se fa a guadagnar Le prese tal volta se fa da <strong>ira</strong> e alguna volta <strong>per la vita</strong> e sono prese, e zoghi che no<span style="text-decoration:underline">n</span> se po &ccedil;ugar de <strong>cortesia</strong>
+        </blockquote>
+        <div class="attribution">
+          "In plays taken in <strong>agreement</strong>, the holds are made <strong>of love</strong> and not of <strong>anger</strong>. And in the art of grappling done to gain holds, sometimes it is from <strong>anger</strong> and sometimes <strong>for life</strong>, and these are holds and plays that cannot be played with <strong>courtesy</strong>."
+          <br>(Hatcher translation of PD carta 2a)
+        </div>
+      </div>
+
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--lg);">
+        The Pisani Dossi uses a richer vocabulary. Where the Getty says <em>sola&ccedil;o</em> (pleasure), the PD says <em>concordia</em> (mutual agreement) and <em>d'amore</em> (of love). And where the Getty gives a binary (<em>sola&ccedil;o / ira</em>), the PD gives a spectrum: <em>d'amore</em> &rarr; <em>da ira</em> &rarr; <em>per la vita</em>. Three terms, not two.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid var(--rule); margin: var(--lg) 0;">
+
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">The Vocabulary Compared</h3>
+
+      <div style="overflow-x: auto;">
+        <table style="font-family: var(--font-ui); font-size: 0.85rem; border-collapse: collapse; width: 100%; margin-bottom: var(--lg);">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--rule-heavy);">
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Concept</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Getty (c. 1400s)</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Pisani Dossi (1409)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="padding: var(--sm) var(--md);">Cooperative practice</td>
+              <td style="padding: var(--sm) var(--md);"><em>sola&ccedil;o</em> (pleasure)</td>
+              <td style="padding: var(--sm) var(--md);"><em>concordia</em> (agreement) + <em>d'amore</em> (of love)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="padding: var(--sm) var(--md);">Hostile intent</td>
+              <td style="padding: var(--sm) var(--md);"><em>ira</em> (anger)</td>
+              <td style="padding: var(--sm) var(--md);"><em>da ira</em> (from anger)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="padding: var(--sm) var(--md);">Mortal stakes</td>
+              <td style="padding: var(--sm) var(--md);"><em>per la uita</em> (= explains ira)</td>
+              <td style="padding: var(--sm) var(--md);"><em>per la vita</em> (separate from ira)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="padding: var(--sm) var(--md);">What can't be trained safely</td>
+              <td style="padding: var(--sm) var(--md);">&mdash;</td>
+              <td style="padding: var(--sm) var(--md);"><em>non se po &ccedil;ugar de cortesia</em> (cannot be played with courtesy)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="padding: var(--sm) var(--md);">Structure</td>
+              <td style="padding: var(--sm) var(--md);"><em>dua razone</em> &mdash; binary</td>
+              <td style="padding: var(--sm) var(--md);">Spectrum: love &rarr; anger &rarr; for life</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">What Changed?</h3>
+
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        The Getty gives a clean binary that every martial artist recognises: training vs. fighting. The PD, written later, is more nuanced. It adds <em>concordia</em> (mutual agreement) as the mechanism that makes practice safe &mdash; not the absence of technique, but the presence of consent. It adds <em>cortesia</em> (courtesy) as the boundary that certain techniques cross. And it separates <em>ira</em> (anger/competition) from <em>per la vita</em> (mortal stakes) as distinct contexts.
+      </p>
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        Whether this reflects Fiore's evolving thought, a different scribal context, or simply a more condensed redaction is an open question. What's clear is that the same author, writing about the same techniques, chose different words to describe the spectrum between cooperation and lethality.
+      </p>
+
+      <figure class="detail-figure" style="max-width: 640px; margin: var(--xl) 0;">
+        <img src="images/pd_02a_grappling_intro.webp" alt="Full grappling introduction paragraph, carta 2a">
+        <figcaption style="font-family: var(--font-ui); font-size: 0.72rem; color: var(--fg-faint); line-height: 1.4; margin-top: var(--xs);">
+          Wider context: the full grappling introduction on carta 2a. The seven attributes of wrestling precede the <em>concordia/d'amore/ira/per la vita</em> passage.
+        </figcaption>
+      </figure>
+
+      <!-- ── Coda ────────────────────────────────── -->
+      <div class="coda">
+        <p>
+          Manuscript images: J. Paul Getty Museum (CC0) and Novati 1902 facsimile via Wiktenauer.<br>
+          Translations: Colin Hatcher (CC BY-NC-SA 4.0).<br>
+          <a href="about.html">About this project</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 5: About ─────────────────────────── -->
   <!-- ══════════════════════════════════════════════ -->
   <div class="page-panel" id="panel-about">
     <div class="page" style="text-align: center; padding-top: var(--xxl);">
