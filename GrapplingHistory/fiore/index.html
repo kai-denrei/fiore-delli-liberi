@@ -771,14 +771,6 @@
         Written around 1400 by the knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise, covering both unarmed and armed grappling across 47 folios of illustrated instruction.
       </p>
 
-      <!-- ── d'amore Detail (below viewer, PD only) -->
-      <figure class="detail-figure" id="pdDetailFigure" style="max-width: 640px; margin-top: var(--xl); display: none;">
-        <img src="images/pd_02a_damore_detail.webp" alt="Detail: le prese se fa d'amore e non da ira">
-        <figcaption>
-          Carta 2a: <em>"le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>... tal volta se fa da ira e alguna volta <strong>per la vita</strong>"</em> — three terms in the original 1409 hand. The Getty (c. 1400s) uses <em>solaço</em> where this says <em>d'amore</em>.
-        </figcaption>
-      </figure>
-
       <!-- ── Coda ────────────────────────────────── -->
       <div class="coda">
         <p>
@@ -1232,7 +1224,6 @@
         buildFolioStrip();
         buildPdFolioStrip();
         showFolio(0);
-        if (PD_FOLIOS.length > 0) showPdFolio(0);
       } catch (e) {
         document.getElementById('folioViewer').innerHTML =
           '<div class="loading">Failed to load data. Run build_data.py first.</div>';
@@ -1458,8 +1449,6 @@
       document.getElementById('folioStrip').style.display = newMs === 'getty' ? '' : 'none';
       document.getElementById('pdFolioStrip').style.display = newMs === 'pd' ? '' : 'none';
       buildSectionNav(newMs);
-
-      document.getElementById('pdDetailFigure').style.display = newMs === 'pd' ? '' : 'none';
 
       if (wasMs === 'getty' && newMs === 'pd') {
         const gettyId = FOLIOS[currentFolio]?.id;
