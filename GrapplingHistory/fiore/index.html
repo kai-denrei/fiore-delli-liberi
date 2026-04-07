@@ -211,11 +211,15 @@
       position: sticky;
       top: var(--lg);
       align-self: start;
+      aspect-ratio: 1 / 1.44;
+      overflow: hidden;
+      background: var(--bg-panel);
     }
 
     .folio-image-wrap img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
       border: 1px solid var(--rule);
       border-radius: 2px;
       cursor: zoom-in;
@@ -1007,7 +1011,7 @@
       <button data-ms="pd">Pisani Dossi (1409)</button>
     </div>
 
-    <!-- ── Section Nav (Getty only) ────────────── -->
+    <!-- ── Section Nav (shared, rebuilds on MS switch) -->
     <nav class="section-nav" id="sectionNav"></nav>
 
     <!-- ── Shared Folio Strip ──────────────────── -->
@@ -1058,7 +1062,8 @@
         SECTIONS = DATA.sections;
         PD_FOLIOS = DATA.pd_folios || [];
         GETTY_TO_PD = DATA.getty_to_pd || {};
-        buildSectionNav();
+        PD_SECTIONS = DATA.pd_sections || {};
+        buildSectionNav('getty');
         buildFolioStrip();
         buildPdFolioStrip();
         showFolio(0);
@@ -1070,16 +1075,25 @@
     }
 
     // ── Section navigation ────────────────────────
-    function buildSectionNav() {
+    let PD_SECTIONS = {};
+
+    function buildSectionNav(ms) {
       const nav = document.getElementById('sectionNav');
-      const sectionNames = Object.keys(SECTIONS);
+      nav.innerHTML = '';
+      const sections = ms === 'pd' ? PD_SECTIONS : SECTIONS;
+      const sectionNames = Object.keys(sections);
       sectionNames.forEach(name => {
         const btn = document.createElement('button');
         btn.textContent = name;
         btn.addEventListener('click', () => {
-          const firstFolio = SECTIONS[name][0];
-          const idx = FOLIOS.findIndex(f => f.id === firstFolio);
-          if (idx >= 0) showFolio(idx);
+          const firstFolio = sections[name][0];
+          if (ms === 'pd') {
+            const idx = PD_FOLIOS.findIndex(f => f.id === firstFolio);
+            if (idx >= 0) showPdFolio(idx);
+          } else {
+            const idx = FOLIOS.findIndex(f => f.id === firstFolio);
+            if (idx >= 0) showFolio(idx);
+          }
           document.querySelectorAll('.section-nav button').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
         });
@@ -1268,10 +1282,10 @@
       document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
       document.querySelector(`#msSwitcher [data-ms="${newMs}"]`).classList.add('active');
 
-      // Toggle folio strips
+      // Toggle folio strips and rebuild section nav
       document.getElementById('folioStrip').style.display = newMs === 'getty' ? '' : 'none';
       document.getElementById('pdFolioStrip').style.display = newMs === 'pd' ? '' : 'none';
-      document.getElementById('sectionNav').style.display = newMs === 'getty' ? '' : 'none';
+      buildSectionNav(newMs);
 
       // Show/hide d'amore detail
       document.getElementById('pdDetailFigure').style.display = newMs === 'pd' ? '' : 'none';
@@ -1328,6 +1342,11 @@
       const activeBtn = document.querySelector(`#pdFolioStrip button[data-idx="${idx}"]`);
       if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
+      // Update section nav
+      document.querySelectorAll('.section-nav button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === fol.section);
+      });
+
       const imgSrc = `images/pd_${fol.id}.webp`;
       const hasItalian = fol.italian && fol.italian.length > 0;
       const hasHatcher = fol.hatcher && fol.hatcher.length > 0;
@@ -1344,6 +1363,7 @@
         <div class="text-panel">
           <div class="folio-heading">
             Carta ${fol.id}
+            ${fol.section ? `<span class="section-tag">${fol.section}</span>` : ''}
             ${fol.getty_equiv ? `<span class="section-tag" style="cursor:pointer;" onclick="switchMs('getty'); const gi=FOLIOS.findIndex(f=>f.id==='${fol.getty_equiv}'); if(gi>=0) showFolio(gi);">&rarr; Getty ${fol.getty_equiv}</span>` : ''}
           </div>
 

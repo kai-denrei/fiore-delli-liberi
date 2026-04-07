@@ -189,6 +189,18 @@ def main():
             g2pd.setdefault(f["getty_equiv"], []).append(f["id"])
     output["getty_to_pd"] = g2pd
 
+    # Build PD section index (derived from Getty equiv mapping)
+    pd_sections_index = {}
+    for pf in pd_folios:
+        getty_eq = pf.get("getty_equiv")
+        if not getty_eq:
+            continue
+        sec = get_section(getty_eq)
+        if sec:
+            pf["section"] = sec
+            pd_sections_index.setdefault(sec, []).append(pf["id"])
+    output["pd_sections"] = pd_sections_index
+
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False))
     print(f"Written: {OUTPUT}")
     print(f"Size: {OUTPUT.stat().st_size / 1024:.0f} KB")
