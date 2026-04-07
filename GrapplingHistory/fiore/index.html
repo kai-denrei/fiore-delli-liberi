@@ -1340,35 +1340,31 @@
           ${renderNav(idx, 'compact')}
 
           <div class="translation-tabs" id="transTabs">
-            ${fol.hatcher ? '<button class="active" data-tab="hatcher">Hatcher (Getty)</button>' : ''}
-            ${fol.chidester ? '<button data-tab="chidester">Chidester (Morgan)</button>' : ''}
-            ${fol.pisani_dossi ? '<button data-tab="pisani_dossi">Hatcher (Pisani Dossi)</button>' : ''}
-            ${fol.pd_italian ? '<button data-tab="pd_italian">Pisani Dossi (1409)</button>' : ''}
-            <button ${!fol.hatcher ? 'class="active"' : ''} data-tab="italian">Getty (Italian)</button>
+            <button ${fol.hatcher ? 'class="active"' : 'disabled style="text-decoration:line-through;opacity:0.35;"'} data-tab="hatcher">Hatcher (Getty)</button>
+            <button ${!fol.chidester ? 'disabled style="text-decoration:line-through;opacity:0.35;"' : ''} data-tab="chidester">Chidester (Morgan)</button>
+            <button ${!fol.pisani_dossi ? 'disabled style="text-decoration:line-through;opacity:0.35;"' : ''} data-tab="pisani_dossi">Hatcher (PD)</button>
+            <button ${!fol.pd_italian ? 'disabled style="text-decoration:line-through;opacity:0.35;"' : ''} data-tab="pd_italian">PD (1409)</button>
+            <button ${!fol.hatcher && !fol.chidester ? 'class="active"' : ''} data-tab="italian">Getty (Italian)</button>
             <button data-tab="claude">Raw OCR</button>
           </div>
 
-          ${fol.hatcher ? `
-          <div class="tab-content active" id="tab-hatcher">
-            <div class="translation-text">${formatPassages(fol.hatcher)}</div>
-          </div>` : ''}
+          <div class="tab-content ${fol.hatcher ? 'active' : ''}" id="tab-hatcher">
+            ${fol.hatcher ? `<div class="translation-text">${formatPassages(fol.hatcher)}</div>` : '<div class="no-translation">No Hatcher translation for this folio.</div>'}
+          </div>
 
-          ${fol.chidester ? `
           <div class="tab-content" id="tab-chidester">
-            <div class="translation-text">${formatPassages(fol.chidester)}</div>
-          </div>` : ''}
+            ${fol.chidester ? `<div class="translation-text">${formatPassages(fol.chidester)}</div>` : '<div class="no-translation">No Chidester translation for this folio.</div>'}
+          </div>
 
-          ${fol.pisani_dossi ? `
           <div class="tab-content" id="tab-pisani_dossi">
-            <div class="translation-text">${formatPassages(fol.pisani_dossi)}</div>
-          </div>` : ''}
+            ${fol.pisani_dossi ? `<div class="translation-text">${formatPassages(fol.pisani_dossi)}</div>` : '<div class="no-translation">No Pisani Dossi translation for this folio.</div>'}
+          </div>
 
-          ${fol.pd_italian ? `
           <div class="tab-content" id="tab-pd_italian">
-            <div class="italian-text">${formatPassages(fol.pd_italian)}</div>
-          </div>` : ''}
+            ${fol.pd_italian ? `<div class="italian-text">${formatPassages(fol.pd_italian)}</div>` : '<div class="no-translation">No Pisani Dossi Italian text for this folio.</div>'}
+          </div>
 
-          <div class="tab-content ${!fol.hatcher ? 'active' : ''}" id="tab-italian">
+          <div class="tab-content ${!fol.hatcher && !fol.chidester ? 'active' : ''}" id="tab-italian">
             <div class="italian-text">${formatText(fol.transcription, true)}</div>
           </div>
 
@@ -1551,21 +1547,17 @@
           ${renderPdNav(idx, 'compact')}
 
           <div class="translation-tabs" id="pdTransTabs">
-            ${hasItalian ? '<button class="active" data-tab="pd-it">Pisani Dossi (Italian)</button>' : ''}
-            ${hasHatcher ? `<button ${!hasItalian ? 'class="active"' : ''} data-tab="pd-en">Hatcher (English)</button>` : ''}
+            <button ${hasItalian ? 'class="active"' : 'disabled style="text-decoration:line-through;opacity:0.35;"'} data-tab="pd-it">PD (Italian)</button>
+            <button ${!hasHatcher ? 'disabled style="text-decoration:line-through;opacity:0.35;"' : !hasItalian ? 'class="active"' : ''} data-tab="pd-en">Hatcher (English)</button>
           </div>
 
-          ${hasItalian ? `
           <div class="tab-content ${hasItalian ? 'active' : ''}" id="tab-pd-it">
-            <div class="italian-text">${fol.italian.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>
-          </div>` : ''}
+            ${hasItalian ? `<div class="italian-text">${fol.italian.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>` : '<div class="no-translation">No Italian transcription for this carta.</div>'}
+          </div>
 
-          ${hasHatcher ? `
-          <div class="tab-content ${!hasItalian ? 'active' : ''}" id="tab-pd-en">
-            <div class="translation-text">${fol.hatcher.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>
-          </div>` : ''}
-
-          ${!hasItalian && !hasHatcher ? '<div class="no-translation">No transcription available for this folio yet.</div>' : ''}
+          <div class="tab-content ${!hasItalian && hasHatcher ? 'active' : ''}" id="tab-pd-en">
+            ${hasHatcher ? `<div class="translation-text">${fol.hatcher.map(t => '<p>' + escapeHtml(t) + '</p>').join('')}</div>` : '<div class="no-translation">No Hatcher translation for this carta.</div>'}
+          </div>
 
           ${renderPdNav(idx)}
         </div>`;
