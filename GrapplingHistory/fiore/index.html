@@ -1325,6 +1325,8 @@
             ${GETTY_TO_PD[fol.id] ? `<span class="section-tag" style="cursor:pointer;" onclick="switchMs('pd'); const pi=PD_FOLIOS.findIndex(f=>f.id==='${GETTY_TO_PD[fol.id][0]}'); if(pi>=0) showPdFolio(pi);">PD ${GETTY_TO_PD[fol.id].join(', ')}</span>` : ''}
           </div>
 
+          ${renderNav(idx, 'compact')}
+
           <div class="translation-tabs" id="transTabs">
             ${fol.hatcher ? '<button class="active" data-tab="hatcher">Hatcher (Getty)</button>' : ''}
             ${fol.chidester ? '<button data-tab="chidester">Chidester (Morgan)</button>' : ''}
@@ -1395,12 +1397,23 @@
       }
     }
 
-    function renderNav(idx) {
+    function renderNav(idx, style) {
+      const compact = style === 'compact';
       return `
-        <div class="folio-nav">
-          <button ${idx === 0 ? 'disabled' : ''} onclick="showFolio(${idx - 1})">&larr; Previous</button>
+        <div class="folio-nav" ${compact ? 'style="margin-top:0; border-top:none; padding-top:0; margin-bottom:var(--sm);"' : ''}>
+          <button ${idx === 0 ? 'disabled' : ''} onclick="showFolio(${idx - 1})">&larr;</button>
           <span class="current-label">${FOLIOS[idx].id}</span>
-          <button ${idx === FOLIOS.length - 1 ? 'disabled' : ''} onclick="showFolio(${idx + 1})">Next &rarr;</button>
+          <button ${idx === FOLIOS.length - 1 ? 'disabled' : ''} onclick="showFolio(${idx + 1})">&rarr;</button>
+        </div>`;
+    }
+
+    function renderPdNav(idx, style) {
+      const compact = style === 'compact';
+      return `
+        <div class="folio-nav" ${compact ? 'style="margin-top:0; border-top:none; padding-top:0; margin-bottom:var(--sm);"' : ''}>
+          <button ${idx === 0 ? 'disabled' : ''} onclick="showPdFolio(${idx - 1})">&larr;</button>
+          <span class="current-label">${PD_FOLIOS[idx].id}</span>
+          <button ${idx === PD_FOLIOS.length - 1 ? 'disabled' : ''} onclick="showPdFolio(${idx + 1})">&rarr;</button>
         </div>`;
     }
 
@@ -1523,6 +1536,8 @@
             ${fol.getty_equiv ? `<span class="section-tag" style="cursor:pointer;" onclick="switchMs('getty'); const gi=FOLIOS.findIndex(f=>f.id==='${fol.getty_equiv}'); if(gi>=0) showFolio(gi);">&rarr; Getty ${fol.getty_equiv}</span>` : ''}
           </div>
 
+          ${renderPdNav(idx, 'compact')}
+
           <div class="translation-tabs" id="pdTransTabs">
             ${hasItalian ? '<button class="active" data-tab="pd-it">Pisani Dossi (Italian)</button>' : ''}
             ${hasHatcher ? `<button ${!hasItalian ? 'class="active"' : ''} data-tab="pd-en">Hatcher (English)</button>` : ''}
@@ -1540,11 +1555,7 @@
 
           ${!hasItalian && !hasHatcher ? '<div class="no-translation">No transcription available for this folio yet.</div>' : ''}
 
-          <div class="folio-nav">
-            <button ${idx === 0 ? 'disabled' : ''} onclick="showPdFolio(${idx - 1})">&larr; Previous</button>
-            <span class="current-label">${fol.id}</span>
-            <button ${idx === PD_FOLIOS.length - 1 ? 'disabled' : ''} onclick="showPdFolio(${idx + 1})">Next &rarr;</button>
-          </div>
+          ${renderPdNav(idx)}
         </div>`;
 
       // Tab switching for PD
