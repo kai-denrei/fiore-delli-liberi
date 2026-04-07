@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiore dei Liberi — Fior di Battaglia</title>
+  <style>
+    /* ── Reset & Base ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --measure: 64ch;
+      --margin-w: 28ch;
+      --gutter: 2.5rem;
+
+      --xs: 0.25rem;
+      --sm: 0.5rem;
+      --md: 1rem;
+      --lg: 2rem;
+      --xl: 4rem;
+      --xxl: 6rem;
+
+      --bg: #faf8f4;
+      --bg-panel: #f2efe8;
+      --bg-tab-active: #faf8f4;
+      --fg: #2c2416;
+      --fg-muted: #7a6f5f;
+      --fg-faint: #b5ad9e;
+      --accent: #8b4513;
+      --accent-light: #c4956a;
+      --rule: #d6cfc2;
+      --rule-heavy: #a89e8c;
+
+      --font-body: 'Spectral', Georgia, 'Times New Roman', serif;
+      --font-ui: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+      --body-size: 1.0625rem;
+      --lh: 1.65;
+    }
+
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: var(--lh);
+      color: var(--fg);
+      background: var(--bg);
+      font-optical-sizing: auto;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page Frame ─────────────────────────────────── */
+    .page {
+      max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
+      margin: 0 auto;
+      padding: var(--xl) var(--lg);
+    }
+
+    /* ── Header / Entry ─────────────────────────────── */
+    .eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--sm);
+    }
+
+    .headline {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      margin-bottom: 0.15rem;
+    }
+
+    .subhead {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--fg-muted);
+      line-height: 1.35;
+      margin-bottom: var(--lg);
+    }
+
+    .header-rule {
+      border: none;
+      border-top: 2px solid var(--fg);
+      width: 4rem;
+      margin-bottom: var(--lg);
+    }
+
+    .meta-line {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-bottom: var(--xl);
+    }
+    .meta-line span + span::before { content: ' · '; color: var(--fg-faint); }
+
+    /* ── Epigraph ───────────────────────────────────── */
+    .epigraph {
+      border-left: 3px solid var(--accent-light);
+      padding: var(--md) 0 var(--md) var(--lg);
+      margin: var(--xl) 0;
+      max-width: var(--measure);
+    }
+    .epigraph blockquote {
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--fg);
+    }
+    .epigraph .attribution {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-style: normal;
+      color: var(--fg-muted);
+      margin-top: var(--sm);
+    }
+
+    /* ── Lead ───────────────────────────────────────── */
+    .lead {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: var(--measure);
+      margin-bottom: var(--xl);
+    }
+
+    /* ── Section Navigation ─────────────────────────── */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--xs);
+      margin-bottom: var(--xl);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: var(--md);
+    }
+    .section-nav button {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: var(--xs) var(--sm);
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .section-nav button:hover { color: var(--fg); background: var(--bg-panel); }
+    .section-nav button.active {
+      color: var(--accent);
+      border-color: var(--accent-light);
+      background: var(--bg-panel);
+    }
+
+    /* ── Folio Browser ──────────────────────────────── */
+    .folio-strip {
+      display: flex;
+      gap: var(--xs);
+      overflow-x: auto;
+      padding: var(--sm) 0;
+      margin-bottom: var(--lg);
+      scrollbar-width: thin;
+    }
+    .folio-strip button {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      color: var(--fg-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .folio-strip button:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .folio-strip button.active {
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
+    }
+    .folio-strip button.blank { color: var(--fg-faint); border-style: dashed; }
+
+    /* ── Folio Viewer ───────────────────────────────── */
+    .folio-viewer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--lg);
+    }
+
+    @media (min-width: 1100px) {
+      .folio-viewer {
+        grid-template-columns: minmax(380px, 480px) 1fr;
+      }
+    }
+
+    .folio-image-wrap {
+      position: sticky;
+      top: var(--lg);
+      align-self: start;
+    }
+
+    .folio-image-wrap img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      cursor: zoom-in;
+      transition: transform 0.3s;
+    }
+
+    .folio-image-wrap img.zoomed {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: auto;
+      max-width: 95vw;
+      max-height: 95vh;
+      z-index: 100;
+      cursor: zoom-out;
+      border: none;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+
+    .zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 99;
+    }
+    .zoom-overlay.visible { display: block; }
+
+    .folio-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      margin-top: var(--xs);
+      text-align: center;
+    }
+
+    /* ── Text Panel ─────────────────────────────────── */
+    .text-panel { max-width: var(--measure); }
+
+    .folio-heading {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: var(--md);
+    }
+    .folio-heading .section-tag {
+      display: inline-block;
+      background: var(--bg-panel);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 1px 6px;
+      margin-left: var(--sm);
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent);
+    }
+
+    /* ── Translation Tabs ───────────────────────────── */
+    .translation-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: var(--md);
+    }
+    .translation-tabs button {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: var(--sm) var(--md);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .translation-tabs button:hover { color: var(--fg); }
+    .translation-tabs button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Italian Text ───────────────────────────────── */
+    .italian-text {
+      font-style: italic;
+      color: var(--fg);
+      line-height: var(--lh);
+      margin-bottom: var(--lg);
+      white-space: pre-wrap;
+    }
+    .italian-text .position-label {
+      font-family: var(--font-ui);
+      font-style: normal;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      display: block;
+      margin-top: var(--md);
+      margin-bottom: var(--xs);
+    }
+    .italian-text .position-label:first-child { margin-top: 0; }
+
+    .pilcrow { color: var(--accent-light); font-style: normal; }
+
+    /* ── Translation Text ───────────────────────────── */
+    .translation-text {
+      line-height: var(--lh);
+      color: var(--fg);
+    }
+    .translation-text .position-label {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--fg-faint);
+      display: block;
+      margin-top: var(--md);
+      margin-bottom: var(--xs);
+    }
+    .translation-text .position-label:first-child { margin-top: 0; }
+
+    .translation-text p { margin-bottom: var(--md); }
+
+    .no-translation {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: var(--fg-faint);
+      font-style: italic;
+      padding: var(--lg) 0;
+    }
+
+    /* ── Notes ──────────────────────────────────────── */
+    .folio-notes {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--fg-muted);
+      line-height: 1.55;
+      border-top: 1px solid var(--rule);
+      padding-top: var(--md);
+      margin-top: var(--lg);
+    }
+    .folio-notes strong { color: var(--fg); }
+
+    /* ── Folio Navigation Arrows ────────────────────── */
+    .folio-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--xl);
+      padding-top: var(--md);
+      border-top: 1px solid var(--rule);
+    }
+    .folio-nav button {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      padding: var(--sm) var(--md);
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .folio-nav button:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .folio-nav button:disabled { opacity: 0.3; cursor: default; }
+    .folio-nav .current-label {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
+    /* ── Coda ───────────────────────────────────────── */
+    .coda {
+      border-top: 2px solid var(--rule-heavy);
+      margin-top: var(--xxl);
+      padding-top: var(--lg);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      max-width: var(--measure);
+    }
+    .coda a { color: var(--accent); text-decoration: none; }
+    .coda a:hover { text-decoration: underline; }
+
+    /* ── Analysis Panels ────────────────────────────── */
+    .analysis-section {
+      margin: var(--xxl) 0;
+      max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
+    }
+    .analysis-section h2 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: var(--sm);
+    }
+    .analysis-section h2 .section-num {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--fg-faint);
+      line-height: 1;
+      display: block;
+      font-family: var(--font-ui);
+      margin-bottom: var(--xs);
+    }
+    .analysis-intro {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--fg-muted);
+      max-width: var(--measure);
+      margin-bottom: var(--lg);
+    }
+
+    /* ── Sentiment Cards ───────────────────────────── */
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--md);
+      margin-bottom: var(--xl);
+    }
+    .mode-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: var(--md) var(--lg);
+    }
+    .mode-card .mode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--sm);
+    }
+    .mode-card .mode-name {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--fg);
+    }
+    .mode-card .mode-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--fg-faint);
+    }
+    .mode-card .mode-where {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      margin-bottom: var(--sm);
+    }
+    .mode-card blockquote {
+      font-size: 0.88rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--fg);
+      border-left: 2px solid var(--accent-light);
+      padding-left: var(--md);
+      margin: var(--sm) 0;
+    }
+    .mode-card .mode-insight {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      line-height: 1.5;
+      margin-top: var(--sm);
+    }
+
+    /* ── Lexicon ────────────────────────────────────── */
+    .lexicon-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .lex-entry {
+      display: grid;
+      grid-template-columns: minmax(140px, 180px) 1fr;
+      gap: var(--lg);
+      padding: var(--md) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    @media (max-width: 640px) {
+      .lex-entry { grid-template-columns: 1fr; gap: var(--sm); }
+    }
+    .lex-term {
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+    }
+    .lex-term .lex-pos {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 500;
+      font-style: normal;
+      color: var(--fg-faint);
+      letter-spacing: 0.03em;
+      margin-top: 2px;
+    }
+    .lex-term .lex-freq {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--fg-faint);
+      background: var(--bg-panel);
+      padding: 1px 5px;
+      border-radius: 2px;
+      margin-top: 4px;
+    }
+    .lex-body {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--fg);
+    }
+    .lex-body .lex-gloss {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .lex-body .lex-modern {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      background: var(--bg-panel);
+      border-left: 2px solid var(--accent-light);
+      padding: var(--xs) var(--sm);
+      margin-top: var(--sm);
+      line-height: 1.5;
+    }
+
+    /* ── Panel Toggle ──────────────────────────────── */
+    .panel-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--rule);
+      margin-bottom: var(--lg);
+    }
+    .panel-tabs button {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: var(--sm) var(--lg);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      color: var(--fg-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .panel-tabs button:hover { color: var(--fg); }
+    .panel-tabs button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .panel-content { display: none; }
+    .panel-content.active { display: block; }
+
+    /* ── Source Links ───────────────────────────────── */
+    a.src-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-light);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    a.src-link:hover { border-bottom-color: var(--accent); }
+
+    .highlight-flash {
+      background: rgba(139, 69, 19, 0.15);
+      transition: background 2s ease-out;
+    }
+    .highlight-flash-off {
+      background: transparent;
+    }
+
+    /* ── Blank Folio ────────────────────────────────── */
+    .blank-notice {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      color: var(--fg-faint);
+      text-align: center;
+      padding: var(--xxl) 0;
+    }
+
+    /* ── Loading ────────────────────────────────────── */
+    .loading {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: var(--fg-faint);
+      text-align: center;
+      padding: var(--xxl);
+    }
+
+    /* ── Search Bar ─────────────────────────────────── */
+    .search-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      padding: var(--sm) 0;
+    }
+    .search-inner {
+      display: flex;
+      gap: var(--sm);
+      align-items: center;
+      max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
+      margin: 0 auto;
+      padding: 0 var(--lg);
+    }
+    .search-inner input {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: var(--xs) var(--sm);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      background: var(--bg);
+      color: var(--fg);
+      outline: none;
+    }
+    .search-inner input:focus { border-color: var(--accent); }
+    .search-inner .search-status {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+    .search-inner button {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      padding: var(--xs) var(--sm);
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--fg-muted);
+      cursor: pointer;
+    }
+    .search-inner button:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .search-hit { background: rgba(139, 69, 19, 0.2); }
+    .search-hit-current { background: rgba(139, 69, 19, 0.45); }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      .page { padding: var(--lg) var(--md); }
+      .folio-image-wrap { position: static; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ── Search Bar (Ctrl+F / Cmd+K) ──────────── -->
+  <div class="search-bar" id="searchBar">
+    <div class="search-inner">
+      <input type="text" id="searchInput" placeholder="Search all folios (Italian, English, notes)…" autocomplete="off">
+      <span class="search-status" id="searchStatus"></span>
+      <button id="searchPrev" title="Previous (Shift+Enter)">&#9650;</button>
+      <button id="searchNext" title="Next (Enter)">&#9660;</button>
+      <button id="searchClose" title="Close (Esc)">&times;</button>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- ── Header ──────────────────────────────── -->
+    <div class="eyebrow">History of Grappling · c. 1410</div>
+    <h1 class="headline">Fiore dei Liberi</h1>
+    <p class="subhead">Fior di Battaglia — The Flower of Battle</p>
+    <hr class="header-rule">
+    <div class="meta-line">
+      <span>Getty MS Ludwig XV 13</span>
+      <span>Cividale del Friuli, Patriarchate of Aquileia</span>
+      <span>47 folios, 91 pages</span>
+    </div>
+
+    <!-- ── Epigraph ────────────────────────────── -->
+    <div class="epigraph">
+
+      <blockquote>
+        E comiçemo al braçare. L'oquale sie di dua razone: come da plazo e di ira, coe per la uita cu ogni inzano e falsira e crudelita che si po fare.
+      </blockquote>
+      <div class="attribution">
+        "And we begin with grappling. Which is of two kinds: one from pleasure, and one from anger — that is, for one's life, with every cunning and deception and cruelty that can be done." — Folio 2r
+      </div>
+    
+    </div>
+
+    <!-- ── Lead ────────────────────────────────── -->
+    <p class="lead">
+
+      Written around 1410 by the Friulian knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise. Dedicated to Niccolò III d'Este, Marquis of Ferrara, it covers unarmed grappling, dagger, sword in one and two hands, armored combat, poleaxe, spear, and mounted fighting. The Getty manuscript — the most complete of four surviving copies — contains 47 folios of illustrated instruction, each play spoken in the voice of the figure performing it.
+    
+    </p>
+
+    <!-- ── Analysis & Lexicon ──────────────────── -->
+    <div class="analysis-section">
+
+      <div class="panel-tabs" id="analysisTabs">
+        <button class="active" data-panel="lexicon">Lexicon</button>
+        <button data-panel="sentiment">Voice &amp; Sentiment</button>
+      </div>
+
+      <!-- ── Lexicon Panel ──────────────────────── -->
+      <div class="panel-content active" id="panel-lexicon">
+        <p class="analysis-intro">
+          Fiore writes in Middle Italian (Venetian dialect, c. 1410). His technical vocabulary maps directly onto modern combat sports concepts — the words encode distinctions that practitioners still navigate today.
+        </p>
+
+        <div class="lexicon-grid">
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Solaço / Ira
+              <span class="lex-pos">noun pair</span>
+              <span class="lex-freq">3 occurrences · fol. 2r, 10v</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”Pleasure” vs. “Anger.”</span> The Getty (fol. 2r) distinguishes <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”>two kinds of grappling</a> (<em>dua razone</em>): <em>da solaço</em> — from pleasure, cooperative — vs. <em>di ira</em> — from anger, <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”cu ogni inganno e falsita e crudelita”>”with every cunning and deception and cruelty that can be done”</a>. The same technique belongs to both categories; only intent transforms it.
+              <div class="lex-modern"><strong>Modern parallel:</strong> The distinction between drilling/positional sparring (solaço) and full competition or self-defense (ira) is reminiscent of how combat sports gym operates in terms of intensity variations.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Sbarra / Starria
+              <span class="lex-pos">noun</span>
+              <span class="lex-freq">8 occurrences · fol. 1r, 2r</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”The barriers” or “the lists.”</span> A fenced enclosure for formal judicial combat. When Fiore says a student <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”debea cobattere”><em>”debea cobattere m[en] Starria”</em></a> — had to fight in the barriers — he means a legal duel with witnesses, stakes, and rules. Armoured, with specified weapons, often before nobility. Dangerous but survivable: <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”rare that anyone dies”>”nine times out of ten nobody dies, because they are taken prisoner”</a> (Hatcher, fol. 1v–2r).
+              <figure style="margin: var(--md) 0; max-width: 380px;">
+                <img src="images/sbarra.webp" alt="Watercolor rendition of a 14th-century sbarra — a fenced enclosure for judicial combat" style="width: 100%; border-radius: 3px; border: 1px solid var(--rule);">
+                <figcaption style="font-family: var(--font-ui); font-size: 0.7rem; color: var(--fg-faint); margin-top: var(--xs); line-height: 1.4;">Modern rendition of what a 14th-century Sbarra might have looked like — a fenced enclosure with a viewing stand for nobility.</figcaption>
+              </figure>
+              <div class="lex-modern"><strong>Modern parallel:</strong> The closest analogue is MMA or professional fighting — a very violent contest that nonetheless has rules, a referee, and a cage. Fiore explicitly distinguishes this from both training (solaço) and mortal combat (<em>ad oltrança</em>).</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Oltrança
+              <span class="lex-pos">noun / adverb</span>
+              <span class="lex-freq">2 occurrences · fol. 1r</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”To the utterance” / “to the extreme.”</span> Fighting <em>ad oltrança</em> means to death or surrender. Either in the barriers or in the battlefield. This is the context where <em>ira</em> techniques apply — <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”in li ochi, e lo naso, e le tempie”>strikes to the eyes, nose, temples, chin, and flanks</a> (Getty fol. 2r). Fiore teaches both tiers in the same system; the student must know which techniques belong to which context.
+              <div class=”lex-modern”><strong>Modern parallel:</strong> Self-defense vs. sport — the techniques that are <a class=”src-link” data-folio=”02r” data-tab=”pisani_dossi” data-search=”cannot be practiced with courtesy”>”too dangerous to practice with courtesy”</a> (Hatcher, PD carta 2a) are the ones illegal in competition. Fiore documents them alongside the legal ones and trusts the student to know the difference.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Çogho / Zogho
+              <span class="lex-pos">noun</span>
+              <span class="lex-freq">57 occurrences · 26 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class="lex-gloss">“Play” or “game.”</span> Every technique is a <em>zogho</em>. Not metaphorical — the same word means both a game and a combat technique. <em>Zogho largo</em> = wide play (long range). <em>Zogho stretto</em> = narrow play (close range, grappling distance). The word itself encodes the training/fighting ambiguity: every “game” is also a “fight,” and every “fight” is also a “game.”
+              <div class="lex-modern"><strong>Modern parallel:</strong> “Rolling” in BJJ, “randori” in judo, your "A-Game", etc.&nbsp; The ludic framing is ancient.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Zugadore / Çugadore
+              <span class="lex-pos">noun</span>
+              <span class="lex-freq">26 occurrences · 9 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class="lex-gloss">“Player.”</span> The person being thrown or controlled in a technique demonstration. Fiore’s deliberate choice over “enemy” or “adversary” — the <em>zugadore</em> is the one who attacks so the master or scholar can demonstrate the response. In illustrations, the player wears no insignia (no crown, no garter).
+              <div class="lex-modern"><strong>Modern parallel:</strong> Uke in judo/aikido — the training partner who feeds the attack. Fiore’s choice of “player” over “attacker” reveals a system designed around cooperative practice, even when documenting lethal techniques.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Prese
+              <span class="lex-pos">noun, plural</span>
+              <span class="lex-freq">59 occurrences · 25 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”Holds” or “grips.”</span> The atomic unit of <em>abrazare</em>. The Getty (fol. 2r) frames holds within the <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”><em>solaço/ira</em></a> distinction — holds practiced in pleasure vs. holds for real combat. The Pisani Dossi (carta 2a) adds that certain holds are <a class=”src-link” data-folio=”02r” data-tab=”pisani_dossi” data-search=”cannot be practiced with courtesy”><em>”prese e zoghi che non se po çugar de cortesia”</em> — holds and plays that cannot be played with courtesy</a>. Separately, at the grappling guards opening, Hatcher renders: <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Holds are not superior”>”Holds are not superior unless they give you an advantage”</a> (fol. 6r).
+              <div class="lex-modern"><strong>Modern parallel:</strong> Grips in wrestling, judo, BJJ. The concept that a grip is not just contact but <em>control with intent</em> is universal across grappling traditions.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Posta
+              <span class="lex-pos">noun</span>
+              <span class="lex-freq">269 occurrences · 61 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”Guard” or “position.”</span> Literally “post” or “station” — where you stand and wait. Every weapon section opens with guards. In grappling: <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Long Guard”><em>Posta Longa</em></a> (Long Guard), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Boar”><em>Dente di Cengiaro</em></a> (Boar’s Tusk), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Iron Gate”><em>Porta di Ferro</em></a> (Iron Gate), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Forehead”><em>Posta Frontale</em></a> (Forehead Guard). Each guard is a persona that speaks in first person, declaring its nature. The most frequent technical term in the manuscript.
+              <div class="lex-modern"><strong>Modern parallel:</strong> Stance in wrestling/MMA, posture in BJJ. The concept of named positions as starting points for all technique has never left grappling.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Ligadure / Roture
+              <span class="lex-pos">noun pair</span>
+              <span class="lex-freq">19 occurrences · 8 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”Binds” and “breaks.”</span> The two outcomes of a successful hold. <em>Ligadure</em> = locks, joint control (<a class=”src-link” data-folio=”04r” data-tab=”italian” data-search=”ligar braci in modo”>binding the arm so “he has no more defense nor can free himself”</a>, Getty fol. 4r). <em>Roture</em> = breaks, dislocations (<a class=”src-link” data-folio=”04r” data-tab=”italian” data-search=”romper braci e çambe”>”breaking arms and legs”</a>, Getty fol. 4r). Listed as two of the eight attributes of grappling. The distinction is control vs. destruction.
+              <div class="lex-modern"><strong>Modern parallel:</strong> Submissions in BJJ split along the same line — you can control (pin, hold) or finish (break, choke). The <em>ligadure/roture</em> pair maps to the tap-or-snap decision.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Remedio / Contrario
+              <span class="lex-pos">noun pair</span>
+              <span class="lex-freq">102 occurrences · 43 folios</span>
+            </div>
+            <div class="lex-body">
+              <span class="lex-gloss">“Remedy” and “Counter.”</span> The pedagogical chain that structures the entire book. The <em>Magistro Remedio</em> (Remedy Master) shows a defense. His scholars demonstrate variations. The <em>Magistro Contrario</em> (Counter Master) defeats the remedy. Occasionally a fourth master (<em>Contra-Contrario</em>) defeats the counter. Three-deep, sometimes four. Each wears insignia: crowns for masters, garters for scholars.
+              <div class="lex-modern"><strong>Modern parallel:</strong> The technique → counter → re-counter chain is the backbone of every grappling curriculum. Fiore formalised it with a visual system (crowns and garters) six centuries before modern instructionals.</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Armiçare
+              <span class="lex-pos">verb / noun</span>
+              <span class="lex-freq">5 occurrences · fol. 1r, 2r, 4r</span>
+            </div>
+            <div class="lex-body">
+              <span class=”lex-gloss”>”The art of armed fighting” / “to fight with arms.”</span> Fiore’s name for his complete system: <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”armiçare”><em>L’Arte d’Armiçare</em></a> or <em>La Scientia d’Armiçare</em>. Notably, <em>arte</em> may mean simply “skill” and <em>scientia</em> “knowledge” — “the skill and knowledge of fighting.” He explicitly compares it to law and medicine: <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”studied forty years in civil law”>”If I had studied forty years in civil law… I would be a doctor in those three sciences”</a> (Hatcher, fol. 2r).
+              <div class="lex-modern"><strong>Modern parallel:</strong> The claim that martial arts is an intellectual discipline requiring systematic study and documentation — not just physical talent — is Fiore’s most modern argument. It anticipates every debate about “is fighting an art or a sport?”</div>
+            </div>
+          </div>
+
+          <div class="lex-entry">
+            <div class="lex-term">
+              Abrazare
+              <span class="lex-pos">verb / noun</span>
+              <span class="lex-freq">11 occurrences · fol. 2r, 4r</span>
+            </div>
+            <div class="lex-body">
+              <span class="lex-gloss">“To grapple” / “grappling.”</span> Literally “to embrace.” The first section of the treatise and the foundation of the whole system. Fiore lists eight attributes: strength, speed, advantageous holds, breaks, binds, strikes to vulnerable points, throws, and dislocations. The Pisani Dossi lists seven (combining the last two). This is the section where the <em>solaço/ira</em> distinction is introduced.
+              <div class="lex-modern"><strong>Modern parallel:</strong> The word itself — “embrace” — captures the intimacy of grappling that distinguishes it from striking. Fiore begins here, before weapons, because grappling is where all armed combat ends up at close range.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Sentiment Panel ───────────────────────── -->
+      <div class="panel-content" id="panel-sentiment">
+        <p class="analysis-intro">
+          The manuscript operates in six distinct rhetorical modes, often layered within a single passage. This is not a manual in the modern sense — it is a <strong>dramatic performance on parchment</strong>, where each figure speaks in first person, boasting, threatening, and instructing simultaneously.
+        </p>
+
+        <div class="mode-grid">
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">Conditional Tactics</span>
+              <span class="mode-count">98 passages</span>
+            </div>
+            <div class="mode-where">Densest in Grappling, Dagger, Sword</div>
+            <blockquote><a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”if that lock looks like it will fail”>”And if that lock looks like it will fail me, then I will switch to one of the other locks that follow.”</a></blockquote>
+            <div class="mode-insight">The “if… then… alternatively” structure maps directly to how modern coaches teach: primary technique → read the reaction → follow-up. Evidence that Fiore’s abrazare is a <strong>flowchart-based system</strong>, not a technique catalogue.</div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">Threat to Opponent</span>
+              <span class="mode-count">94 passages</span>
+            </div>
+            <div class="mode-where">Everywhere — densest in Grappling + Dagger</div>
+            <blockquote><a class=”src-link” data-folio=”07r” data-tab=”hatcher” data-search=”press my thumb under your ear”>”When I press my thumb under your ear you will feel so much pain that you will go to the ground for sure.”</a></blockquote>
+            <div class="mode-insight">The violence is the specification. “Force you to the ground” is the functional description; “pain and suffering” is the consequence that motivates learning both the technique <em>and its counter</em>.</div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">First-Person Boast</span>
+              <span class="mode-count">60 passages</span>
+            </div>
+            <div class="mode-where">Guards, Seven Swords, section openers</div>
+            <blockquote><a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”I am the Iron Gate”>”I am the Iron Gate, full of danger. Those who oppose me will always end up in pain and suffering.”</a></blockquote>
+            <div class="mode-insight">Each guard is a <strong>persona</strong> with a voice. The boast is the mnemonic — you remember what the Iron Gate does because the Iron Gate <em>tells you</em>. Persona-based pedagogy.</div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">Counter-Rhetoric</span>
+              <span class="mode-count">50 passages</span>
+            </div>
+            <div class="mode-where">Dagger, Mounted — “I make the counter to the play before me”</div>
+            <blockquote><a class=”src-link” data-folio=”10r” data-tab=”hatcher” data-search=”What you plan to do cannot always be done”>”What you plan to do cannot always be done.”</a></blockquote>
+            <div class="mode-insight">The counter always references the previous technique explicitly, creating a <strong>linked-list structure</strong>. Each counter acknowledges the validity of what it defeats — not dismissal but dialectic. The system teaches through opposition.</div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">Philosophical</span>
+              <span class="mode-count">48 passages</span>
+            </div>
+            <div class="mode-where">Preface almost exclusively</div>
+            <blockquote><a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”no man in the world with so great a memory”>”This art is so vast that there is no man in the world with so great a memory that he could keep in mind without books a quarter of this art.”</a></blockquote>
+            <div class="mode-insight">Fiore claims intellectual parity with law and medicine. The <em>solaço/ira</em> passage isn’t just a preface remark — it’s the emotional architecture of the whole manuscript. Guards are theatrical (solaço), grappling plays are violent (ira), counters are dialectical.</div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-header">
+              <span class="mode-name">Autobiographical</span>
+              <span class="mode-count">33 passages</span>
+            </div>
+            <div class="mode-where">Preface only (fol. 1r–2r), then Fiore disappears</div>
+            <blockquote><a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”five times, for my honor”>”Five times, for my honor, I was compelled to fight in strange places, without relatives and without friends, having no hope except in God, in my art, and in my sword.”</a></blockquote>
+            <div class="mode-insight">Fiore front-loads all personal history then vanishes. The figures take over. The separation is deliberate: author-as-credentialed-expert (preface) vs. system-as-self-demonstrating (body). He fought five duels because envious masters challenged him — he won all five, unarmoured, with sharp swords.</div>
+          </div>
+
+        </div>
+
+        <p class="analysis-intro" style="margin-top: var(--lg);">
+          <strong>Fiore's contexts of combat.</strong> The Getty (fol. 2r) names <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”>two kinds</a>: <em>solaço</em> (pleasure — cooperative practice) and <em>ira</em> (anger — for one's life). Separately, in fol. 1r–1v, he discusses <em>sbarra</em> (the barriers — formal armoured combat, where <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”rare that anyone dies”>”it is rare that anyone dies”</a>) and contrasts it with unarmoured duelling with sharp swords, where <a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”single mistake in your defense”>”a single mistake in your defense could cost you your life.”</a> Critically, the barriers can themselves be <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”starra a oltrança”><em>a oltrança</em></a> — to the death. So armour and rules don't eliminate lethality; they reduce it. Fiore teaches one system across all these contexts. When <a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”five times, for my honor”>envious masters forced him to fight five times</a> — unarmoured, with sharp swords, in strange places — he proved it worked.
+        </p>
+      </div>
+    
+    <!-- ── Section Nav ─────────────────────────── -->
+    <nav class="section-nav" id="sectionNav"></nav>
+
+    <!-- ── Folio Strip ─────────────────────────── -->
+    <div class="folio-strip" id="folioStrip"></div>
+
+    <!-- ── Viewer ──────────────────────────────── -->
+    <div class="zoom-overlay" id="zoomOverlay"></div>
+    <div class="folio-viewer" id="folioViewer">
+      <div class="loading">Loading manuscript data&hellip;</div>
+    </div>
+
+    <!-- ── Coda ────────────────────────────────── -->
+    <div class="coda">
+      <p>
+        Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
+        Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
+        Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
+        OCR &amp; additional translation: Claude Vision, 2026.<br>
+        Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // ── Data loading ──────────────────────────────
+    // We load the comparison JSON inline (built by build_data.py)
+    let DATA = null;
+    let FOLIOS = [];
+    let SECTIONS = {};
+    let currentFolio = 0;
+
+    async function init() {
+      try {
+        const resp = await fetch('./data.json');
+        DATA = await resp.json();
+        FOLIOS = DATA.folios;
+        SECTIONS = DATA.sections;
+        buildSectionNav();
+        buildFolioStrip();
+        showFolio(0);
+      } catch (e) {
+        document.getElementById('folioViewer').innerHTML =
+          '<div class="loading">Failed to load data. Run build_data.py first.</div>';
+      }
+    }
+
+    // ── Section navigation ────────────────────────
+    function buildSectionNav() {
+      const nav = document.getElementById('sectionNav');
+      const sectionNames = Object.keys(SECTIONS);
+      sectionNames.forEach(name => {
+        const btn = document.createElement('button');
+        btn.textContent = name;
+        btn.addEventListener('click', () => {
+          const firstFolio = SECTIONS[name][0];
+          const idx = FOLIOS.findIndex(f => f.id === firstFolio);
+          if (idx >= 0) showFolio(idx);
+          document.querySelectorAll('.section-nav button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+        nav.appendChild(btn);
+      });
+    }
+
+    // ── Folio strip ───────────────────────────────
+    function buildFolioStrip() {
+      const strip = document.getElementById('folioStrip');
+      FOLIOS.forEach((fol, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = fol.id;
+        if (fol.blank) btn.classList.add('blank');
+        btn.addEventListener('click', () => showFolio(idx));
+        btn.dataset.idx = idx;
+        strip.appendChild(btn);
+      });
+    }
+
+    // ── Render folio ──────────────────────────────
+    function showFolio(idx) {
+      currentFolio = idx;
+      const fol = FOLIOS[idx];
+      const viewer = document.getElementById('folioViewer');
+
+      // Update strip
+      document.querySelectorAll('.folio-strip button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+      // Scroll strip to active
+      const activeBtn = document.querySelector(`.folio-strip button[data-idx="${idx}"]`);
+      if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+      // Update section nav
+      document.querySelectorAll('.section-nav button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === fol.section);
+      });
+
+      if (fol.blank) {
+        viewer.innerHTML = `
+          <div style="grid-column: 1 / -1;">
+            <div class="blank-notice">
+              Folio ${fol.id} &mdash; blank page
+            </div>
+            ${renderNav(idx)}
+          </div>`;
+        return;
+      }
+
+      const imgSrc = `images/fol_${fol.id}.webp`;
+
+      viewer.innerHTML = `
+        <div class="folio-image-wrap">
+          <img src="${imgSrc}" alt="Folio ${fol.id}" id="folioImg" loading="lazy">
+          <div class="folio-label">Folio ${fol.id} &mdash; Getty MS Ludwig XV 13</div>
+        </div>
+        <div class="text-panel">
+          <div class="folio-heading">
+            Folio ${fol.id}
+            ${fol.section ? `<span class="section-tag">${fol.section}</span>` : ''}
+          </div>
+
+          <div class="translation-tabs" id="transTabs">
+            ${fol.hatcher ? '<button class="active" data-tab="hatcher">Hatcher (Getty)</button>' : ''}
+            ${fol.chidester ? '<button data-tab="chidester">Chidester (Morgan)</button>' : ''}
+            ${fol.pisani_dossi ? '<button data-tab="pisani_dossi">Hatcher (Pisani Dossi)</button>' : ''}
+            ${fol.pd_italian ? '<button data-tab="pd_italian">Pisani Dossi (1409)</button>' : ''}
+            <button ${!fol.hatcher ? 'class="active"' : ''} data-tab="italian">Getty (Italian)</button>
+            <button data-tab="claude">Raw OCR</button>
+          </div>
+
+          ${fol.hatcher ? `
+          <div class="tab-content active" id="tab-hatcher">
+            <div class="translation-text">${formatPassages(fol.hatcher)}</div>
+          </div>` : ''}
+
+          ${fol.chidester ? `
+          <div class="tab-content" id="tab-chidester">
+            <div class="translation-text">${formatPassages(fol.chidester)}</div>
+          </div>` : ''}
+
+          ${fol.pisani_dossi ? `
+          <div class="tab-content" id="tab-pisani_dossi">
+            <div class="translation-text">${formatPassages(fol.pisani_dossi)}</div>
+          </div>` : ''}
+
+          ${fol.pd_italian ? `
+          <div class="tab-content" id="tab-pd_italian">
+            <div class="italian-text">${formatPassages(fol.pd_italian)}</div>
+          </div>` : ''}
+
+          <div class="tab-content ${!fol.hatcher ? 'active' : ''}" id="tab-italian">
+            <div class="italian-text">${formatText(fol.transcription, true)}</div>
+          </div>
+
+          <div class="tab-content" id="tab-claude">
+            <div class="translation-text">${formatText(fol.claude_translation)}</div>
+          </div>
+
+          ${fol.notes ? `
+          <div class="folio-notes">
+            <strong>Notes:</strong> ${fol.notes}
+          </div>` : ''}
+
+          ${renderNav(idx)}
+        </div>`;
+
+      // Tab switching
+      document.querySelectorAll('#transTabs button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#transTabs button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+      });
+
+      // Image zoom
+      const img = document.getElementById('folioImg');
+      const overlay = document.getElementById('zoomOverlay');
+      if (img) {
+        img.addEventListener('click', () => {
+          img.classList.toggle('zoomed');
+          overlay.classList.toggle('visible');
+        });
+        overlay.addEventListener('click', () => {
+          img.classList.remove('zoomed');
+          overlay.classList.remove('visible');
+        });
+      }
+    }
+
+    function renderNav(idx) {
+      return `
+        <div class="folio-nav">
+          <button ${idx === 0 ? 'disabled' : ''} onclick="showFolio(${idx - 1})">&larr; Previous</button>
+          <span class="current-label">${FOLIOS[idx].id}</span>
+          <button ${idx === FOLIOS.length - 1 ? 'disabled' : ''} onclick="showFolio(${idx + 1})">Next &rarr;</button>
+        </div>`;
+    }
+
+    function formatText(text, isItalian) {
+      if (!text) return '<div class="no-translation">No text available for this folio.</div>';
+      let html = escapeHtml(text);
+      // Position labels
+      html = html.replace(/^(Top-left|Top-right|Bottom-left|Bottom-right|Top|Bottom|Left|Right|Center-top|Center|Left label|Right label|Bottom-left label|Bottom-right label|Bottom-center):$/gm,
+        '<span class="position-label">$1</span>');
+      // Paragraph markers
+      html = html.replace(/\u00B6/g, '<span class="pilcrow">\u00B6</span>');
+      // Paragraphs
+      html = html.replace(/\n\n+/g, '</p><p>');
+      html = '<p>' + html + '</p>';
+      return html;
+    }
+
+    function formatPassages(passages) {
+      if (!passages || passages.length === 0) return '<div class="no-translation">No translation available.</div>';
+      return passages.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    }
+
+    function escapeHtml(s) {
+      const el = document.createElement('div');
+      el.textContent = s;
+      return el.innerHTML;
+    }
+
+    // ── Keyboard nav ──────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' && currentFolio > 0) showFolio(currentFolio - 1);
+      if (e.key === 'ArrowRight' && currentFolio < FOLIOS.length - 1) showFolio(currentFolio + 1);
+      if (e.key === 'Escape') {
+        document.getElementById('folioImg')?.classList.remove('zoomed');
+        document.getElementById('zoomOverlay').classList.remove('visible');
+      }
+    });
+
+    // ── Full-text search ───────────────────────────
+    const searchBar = document.getElementById('searchBar');
+    const searchInput = document.getElementById('searchInput');
+    const searchStatus = document.getElementById('searchStatus');
+    let searchResults = []; // [{folioIdx, tab, snippet}]
+    let searchCursor = -1;
+
+    // Cmd+K or Ctrl+K to open search
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    });
+
+    document.getElementById('searchClose').addEventListener('click', () => {
+      searchInput.value = '';
+      searchResults = [];
+      searchCursor = -1;
+      searchStatus.textContent = '';
+      clearSearchHighlights();
+    });
+
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchStatus.textContent = '';
+        clearSearchHighlights();
+      } else if (e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+        navigateSearch(-1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchResults.length === 0) runSearch();
+        else navigateSearch(1);
+      }
+    });
+
+    let searchTimeout = null;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(runSearch, 250);
+    });
+
+    document.getElementById('searchNext').addEventListener('click', () => navigateSearch(1));
+    document.getElementById('searchPrev').addEventListener('click', () => navigateSearch(-1));
+
+    function runSearch() {
+      const q = searchInput.value.trim().toLowerCase();
+      searchResults = [];
+      searchCursor = -1;
+
+      if (q.length < 2 || !DATA) {
+        searchStatus.textContent = '';
+        return;
+      }
+
+      // Search across all folios, all text fields
+      FOLIOS.forEach((fol, idx) => {
+        if (fol.blank) return;
+        const fields = [
+          { tab: 'italian', text: fol.transcription || '' },
+          { tab: 'claude', text: fol.claude_translation || '' },
+          { tab: 'hatcher', text: (fol.hatcher || []).join(' ') },
+          { tab: 'chidester', text: (fol.chidester || []).join(' ') },
+          { tab: 'pisani_dossi', text: (fol.pisani_dossi || []).join(' ') },
+          { tab: 'pd_italian', text: (fol.pd_italian || []).join(' ') },
+          { tab: 'italian', text: fol.notes || '' },
+        ];
+
+        for (const { tab, text } of fields) {
+          if (!text) continue;
+          const lower = text.toLowerCase();
+          let pos = lower.indexOf(q);
+          while (pos !== -1) {
+            const start = Math.max(0, pos - 40);
+            const end = Math.min(text.length, pos + q.length + 40);
+            const snippet = (start > 0 ? '…' : '') +
+              text.slice(start, pos) +
+              '**' + text.slice(pos, pos + q.length) + '**' +
+              text.slice(pos + q.length, end) +
+              (end < text.length ? '…' : '');
+            searchResults.push({ folioIdx: idx, tab, snippet, folioId: fol.id });
+            pos = lower.indexOf(q, pos + 1);
+          }
+        }
+      });
+
+      searchStatus.textContent = searchResults.length > 0
+        ? `${searchResults.length} match${searchResults.length !== 1 ? 'es' : ''}`
+        : 'no matches';
+
+      if (searchResults.length > 0) navigateSearch(1);
+    }
+
+    function navigateSearch(dir) {
+      if (searchResults.length === 0) return;
+      searchCursor += dir;
+      if (searchCursor >= searchResults.length) searchCursor = 0;
+      if (searchCursor < 0) searchCursor = searchResults.length - 1;
+
+      const hit = searchResults[searchCursor];
+      searchStatus.textContent = `${searchCursor + 1} / ${searchResults.length} — fol. ${hit.folioId} (${hit.tab})`;
+
+      // Navigate to that folio and tab, then highlight
+      showFolio(hit.folioIdx);
+      setTimeout(() => {
+        const tabBtn = document.querySelector(`#transTabs button[data-tab="${hit.tab}"]`);
+        if (tabBtn) {
+          document.querySelectorAll('#transTabs button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+          tabBtn.classList.add('active');
+          const panel = document.getElementById('tab-' + hit.tab);
+          if (panel) {
+            panel.classList.add('active');
+            highlightSearchInPanel(panel, searchInput.value.trim());
+          }
+        }
+        document.getElementById('folioViewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    function highlightSearchInPanel(panel, query) {
+      clearSearchHighlights();
+      if (!query) return;
+
+      const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
+      const q = query.toLowerCase();
+      const replacements = [];
+
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const text = node.textContent;
+        const lower = text.toLowerCase();
+        let idx = lower.indexOf(q);
+        if (idx !== -1) {
+          replacements.push({ node, idx, len: query.length });
+        }
+      }
+
+      // Apply highlights (process in reverse to preserve offsets)
+      for (const { node, idx, len } of replacements.reverse()) {
+        const before = node.textContent.slice(0, idx);
+        const match = node.textContent.slice(idx, idx + len);
+        const after = node.textContent.slice(idx + len);
+        const span = document.createElement('mark');
+        span.className = 'search-hit';
+        span.textContent = match;
+        const parent = node.parentNode;
+        const frag = document.createDocumentFragment();
+        if (before) frag.appendChild(document.createTextNode(before));
+        frag.appendChild(span);
+        if (after) frag.appendChild(document.createTextNode(after));
+        parent.replaceChild(frag, node);
+      }
+
+      // Scroll first hit into view
+      const first = panel.querySelector('.search-hit');
+      if (first) {
+        first.classList.add('search-hit-current');
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function clearSearchHighlights() {
+      document.querySelectorAll('mark.search-hit').forEach(mark => {
+        const parent = mark.parentNode;
+        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+        parent.normalize();
+      });
+    }
+
+    // ── Source link navigation ─────────────────────
+    function goToSource(folioId, tab, searchText) {
+      const idx = FOLIOS.findIndex(f => f.id === folioId);
+      if (idx < 0) return;
+      showFolio(idx);
+
+      // Switch to the right tab
+      setTimeout(() => {
+        const tabBtn = document.querySelector(`#transTabs button[data-tab="${tab}"]`);
+        if (tabBtn) {
+          document.querySelectorAll('#transTabs button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+          tabBtn.classList.add('active');
+          const panel = document.getElementById('tab-' + tab);
+          if (panel) panel.classList.add('active');
+
+          // Search and highlight
+          if (searchText && panel) {
+            highlightInPanel(panel, searchText);
+          }
+        }
+        // Scroll viewer into view
+        document.getElementById('folioViewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    function highlightInPanel(panel, searchText) {
+      // Normalize for matching
+      const norm = s => s.toLowerCase().replace(/[''""]/g, "'").replace(/\s+/g, ' ').trim();
+      const needle = norm(searchText);
+
+      // Walk text nodes
+      const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
+      let buf = '';
+      let nodes = [];
+      while (walker.nextNode()) {
+        nodes.push({ node: walker.currentNode, start: buf.length });
+        buf += walker.currentNode.textContent;
+      }
+
+      const haystack = norm(buf);
+      const pos = haystack.indexOf(needle);
+      if (pos < 0) return;
+
+      // Find which text node(s) contain the match
+      for (const { node, start } of nodes) {
+        const nodeText = norm(node.textContent);
+        const nodeEnd = start + node.textContent.length;
+        if (start <= pos && nodeEnd > pos) {
+          // This node contains (at least the start of) the match
+          const parent = node.parentElement;
+          if (parent) {
+            parent.classList.add('highlight-flash');
+            parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              parent.classList.remove('highlight-flash');
+              parent.classList.add('highlight-flash-off');
+              setTimeout(() => parent.classList.remove('highlight-flash-off'), 2000);
+            }, 2500);
+          }
+          break;
+        }
+      }
+    }
+
+    // Handle clicks on source links
+    document.addEventListener('click', e => {
+      const link = e.target.closest('a.src-link');
+      if (!link) return;
+      e.preventDefault();
+      const folio = link.dataset.folio;
+      const tab = link.dataset.tab || 'hatcher';
+      const search = link.dataset.search || '';
+      if (folio) goToSource(folio, tab, search);
+    });
+
+    // ── Localhost Edit Mode ──────────────────────
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit Mode';
+      editBtn.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:200;font-family:var(--font-ui);font-size:0.75rem;padding:6px 14px;background:#2c2416;color:#faf8f4;border:none;border-radius:3px;cursor:pointer;opacity:0.7;transition:opacity 0.15s;';
+      editBtn.onmouseenter = () => editBtn.style.opacity = '1';
+      editBtn.onmouseleave = () => editBtn.style.opacity = editing ? '1' : '0.7';
+      document.body.appendChild(editBtn);
+
+      let editing = false;
+      const SAVE_URL = '/save-edit';
+      const editableSelectors = '.lex-body, .lex-term, .lex-gloss, .lex-modern, .mode-insight, .mode-card blockquote, .mode-name, .mode-where, .analysis-intro, .epigraph blockquote, .epigraph .attribution, .lead, .headline, .subhead';
+
+      editBtn.addEventListener('click', () => {
+        editing = !editing;
+        editBtn.textContent = editing ? 'Editing (auto-saves)' : 'Edit Mode';
+        editBtn.style.background = editing ? '#8b4513' : '#2c2416';
+        editBtn.style.opacity = editing ? '1' : '0.7';
+        document.querySelectorAll(editableSelectors).forEach(el => {
+          el.contentEditable = editing;
+          el.style.outline = editing ? '1px dashed rgba(139,69,19,0.3)' : 'none';
+          el.style.minHeight = editing ? '1em' : '';
+        });
+        if (editing) {
+          // Save on blur
+          document.querySelectorAll(editableSelectors).forEach(el => {
+            el.addEventListener('blur', saveAll);
+          });
+        }
+      });
+
+      async function saveAll() {
+        // Grab the full innerHTML of the analysis section + header
+        const sections = {};
+        const analysis = document.querySelector('.analysis-section');
+        if (analysis) sections.analysis = analysis.innerHTML;
+        const epigraph = document.querySelector('.epigraph');
+        if (epigraph) sections.epigraph = epigraph.innerHTML;
+        const lead = document.querySelector('.lead');
+        if (lead) sections.lead = lead.innerHTML;
+
+        try {
+          const resp = await fetch(SAVE_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(sections)
+          });
+          if (resp.ok) {
+            editBtn.textContent = 'Saved!';
+            setTimeout(() => { editBtn.textContent = 'Editing (auto-saves)'; }, 800);
+          }
+        } catch(e) {
+          // Save server not running — fall back to clipboard
+          console.log('Save server not available, copying to clipboard');
+        }
+      }
+
+      // Also support Ctrl+S to save
+      document.addEventListener('keydown', e => {
+        if (editing && e.key === 's' && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault();
+          saveAll();
+        }
+      });
+    }
+
+    // ── Analysis panel tabs ─────────────────────
+    document.querySelectorAll('#analysisTabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#analysisTabs button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.analysis-section .panel-content').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      });
+    });
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Python ──
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# ── Large original files (keep locally, not in git) ──
+data/raw/
+PDF_MichaelChidester/
+
+# ── Large image originals ──
+*.jpg
+*.jpeg
+*.png
+!GrapplingHistory/**/*.webp
+!GrapplingHistory/**/*.png
+
+# ── Temp files ──
+/tmp/
+*.output
