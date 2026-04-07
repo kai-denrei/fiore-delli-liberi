@@ -211,7 +211,8 @@
       position: sticky;
       top: var(--lg);
       align-self: start;
-      width: 420px;
+      width: 100%;
+      max-width: 420px;
     }
 
     .folio-image-wrap img {
@@ -335,6 +336,8 @@
     .translation-text {
       line-height: var(--lh);
       color: var(--fg);
+      text-wrap: pretty;
+      hyphens: auto;
     }
     .translation-text .position-label {
       font-family: var(--font-ui);
@@ -534,6 +537,8 @@
       font-size: 0.92rem;
       line-height: 1.6;
       color: var(--fg);
+      text-wrap: pretty;
+      hyphens: auto;
     }
     .lex-body .lex-gloss {
       font-weight: 600;
@@ -636,9 +641,123 @@
     }
 
     /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .folio-image-wrap {
+        position: static;
+        width: 100%;
+      }
+    }
+
     @media (max-width: 768px) {
       .page { padding: var(--lg) var(--md); }
-      .folio-image-wrap { position: static; }
+
+      /* Nav: stack tabs below title+search */
+      .site-nav-inner {
+        flex-wrap: wrap;
+        padding: 0 var(--sm);
+        gap: var(--xs);
+      }
+      .site-nav .nav-tabs {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .site-nav .nav-tabs::-webkit-scrollbar { display: none; }
+      .site-nav .nav-tabs button {
+        font-size: 0.72rem;
+        padding: var(--xs) var(--sm);
+        white-space: nowrap;
+      }
+      .site-nav .nav-search {
+        order: 2;
+      }
+      .site-nav .nav-search input {
+        width: 100px;
+        font-size: 0.75rem;
+      }
+      .site-nav .nav-search .search-status { display: none; }
+
+      /* Translation tabs: scroll horizontally */
+      .translation-tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .translation-tabs::-webkit-scrollbar { display: none; }
+      .translation-tabs button {
+        font-size: 0.7rem;
+        padding: var(--xs) var(--sm);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      /* MS switcher */
+      .ms-switcher button {
+        font-size: 0.72rem;
+        padding: var(--xs) var(--sm);
+      }
+
+      /* Section nav: scroll */
+      .section-nav {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .section-nav::-webkit-scrollbar { display: none; }
+      .section-nav button { flex-shrink: 0; }
+
+      /* Folio strip: bigger touch targets */
+      .folio-strip button {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+      }
+
+      /* Folio nav arrows */
+      .folio-nav button {
+        padding: var(--xs) var(--sm);
+        font-size: 0.78rem;
+      }
+
+      /* Lexicon: single column */
+      .lex-entry {
+        grid-template-columns: 1fr;
+        gap: var(--sm);
+      }
+
+      /* Mode cards: full width */
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Epigraph tighter */
+      .epigraph {
+        padding-left: var(--md);
+      }
+      .epigraph blockquote {
+        font-size: 1rem;
+      }
+
+      /* Headline smaller */
+      .headline { font-size: 1.8rem; }
+      .subhead { font-size: 1rem; }
+      .lead { font-size: 1rem; }
+
+      /* Body text slightly smaller */
+      body { font-size: 1rem; }
+
+      /* Detail figures fill width */
+      .detail-figure { max-width: 100% !important; }
+    }
+
+    /* Small phones */
+    @media (max-width: 400px) {
+      .site-nav .nav-title { font-size: 0.72rem; }
+      .site-nav .nav-search input { width: 70px; }
+      .headline { font-size: 1.5rem; }
     }
 
     /* ── Site Navigation ────────────────────────────── */

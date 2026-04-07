@@ -52,7 +52,12 @@
       display: grid; grid-template-columns: 160px 1fr;
       gap: 1.5rem; padding: 0.6rem 0; border-bottom: 1px solid var(--rule);
     }
-    @media (max-width: 600px) { .tool-row { grid-template-columns: 1fr; gap: 0.3rem; } }
+    @media (max-width: 600px) {
+      .tool-row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .page { padding: 2rem 1rem; }
+      h1 { font-size: 1.5rem; }
+      body { font-size: 0.95rem; }
+    }
     .tool-name {
       font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
       color: var(--fg);
