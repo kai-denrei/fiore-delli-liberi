@@ -1003,38 +1003,30 @@
     
     <!-- ── Manuscript Switcher ──────────────────── -->
     <div class="ms-switcher" id="msSwitcher">
-      <button class="active" data-ms="getty">Getty MS Ludwig XV 13 (c. 1400s)</button>
-      <button data-ms="pd">Pisani Dossi MS (1409)</button>
+      <button class="active" data-ms="getty">Getty (c. 1400s)</button>
+      <button data-ms="pd">Pisani Dossi (1409)</button>
     </div>
 
-    <!-- ── Getty Panel ─────────────────────────── -->
-    <div class="ms-panel active" id="ms-getty">
-      <nav class="section-nav" id="sectionNav"></nav>
-      <div class="folio-strip" id="folioStrip"></div>
-      <div class="zoom-overlay" id="zoomOverlay"></div>
-      <div class="folio-viewer" id="folioViewer">
-        <div class="loading">Loading manuscript data&hellip;</div>
-      </div>
+    <!-- ── Section Nav (Getty only) ────────────── -->
+    <nav class="section-nav" id="sectionNav"></nav>
+
+    <!-- ── Shared Folio Strip ──────────────────── -->
+    <div class="folio-strip" id="folioStrip"></div>
+    <div class="folio-strip" id="pdFolioStrip" style="display:none;"></div>
+
+    <!-- ── Shared Viewer ───────────────────────── -->
+    <div class="zoom-overlay" id="zoomOverlay"></div>
+    <div class="folio-viewer" id="folioViewer">
+      <div class="loading">Loading manuscript data&hellip;</div>
     </div>
 
-    <!-- ── Pisani Dossi Panel ──────────────────── -->
-    <div class="ms-panel" id="ms-pd">
-      <p class="analysis-intro">
-        The Pisani Dossi MS (dated February 10, 1409) is a shorter, more condensed redaction by the same author, Fiore dei Liberi. Dedicated to Niccol&ograve; III d'Este. 36 folios vs. the Getty's 47. The images below are from Novati's 1902 facsimile. Where the Getty uses <em>sola&ccedil;o</em> ("pleasure") for cooperative grappling, the Pisani Dossi uses <em>d'amore</em> ("of love") &mdash; a different word choice that may reflect evolving thought across the decade separating the manuscripts.
-      </p>
-
-      <figure class="detail-figure" style="max-width: 640px;">
-        <img src="images/pd_02a_damore_detail.webp" alt="Detail of carta 2a showing 'le prese se fa d'amore e non da ira'">
-        <figcaption>
-          Carta 2a, right column: <em>&ldquo;Che zoghi ch se piglia de concordia le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>. E sopra l'arte de la bra&ccedil;ar che se fa a guadagnar le prese tal volta se fa da ira e alguna volta <strong>per la vita</strong>&rdquo;</em> &mdash; Three distinct terms in the original hand: d'amore, da ira, per la vita.
-        </figcaption>
-      </figure>
-
-      <div class="folio-strip" id="pdFolioStrip"></div>
-      <div class="folio-viewer" id="pdFolioViewer">
-        <div class="loading">Loading Pisani Dossi data&hellip;</div>
-      </div>
-    </div>
+    <!-- ── d'amore Detail (below viewer) ─────── -->
+    <figure class="detail-figure" id="pdDetailFigure" style="max-width: 640px; display: none; margin-top: var(--xl);">
+      <img src="images/pd_02a_damore_detail.webp" alt="Detail: le prese se fa d'amore e non da ira">
+      <figcaption>
+        Carta 2a: <em>&ldquo;le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>&hellip; tal volta se fa da ira e alguna volta <strong>per la vita</strong>&rdquo;</em> &mdash; three terms in the original 1409 hand. The Getty (c. 1400s) uses <em>sola&ccedil;o</em> where this says <em>d'amore</em>.
+      </figcaption>
+    </figure>
 
     <!-- ── Coda ────────────────────────────────── -->
     <div class="coda">
@@ -1149,7 +1141,7 @@
           <div class="folio-heading">
             Folio ${fol.id}
             ${fol.section ? `<span class="section-tag">${fol.section}</span>` : ''}
-            ${GETTY_TO_PD[fol.id] ? `<span class="section-tag" style="cursor:pointer;" onclick="document.querySelector('[data-ms=pd]').click(); const pi=PD_FOLIOS.findIndex(f=>f.id==='${GETTY_TO_PD[fol.id][0]}'); if(pi>=0) showPdFolio(pi);">PD ${GETTY_TO_PD[fol.id].join(', ')}</span>` : ''}
+            ${GETTY_TO_PD[fol.id] ? `<span class="section-tag" style="cursor:pointer;" onclick="switchMs('pd'); const pi=PD_FOLIOS.findIndex(f=>f.id==='${GETTY_TO_PD[fol.id][0]}'); if(pi>=0) showPdFolio(pi);">PD ${GETTY_TO_PD[fol.id].join(', ')}</span>` : ''}
           </div>
 
           <div class="translation-tabs" id="transTabs">
@@ -1270,32 +1262,42 @@
     let activeMs = 'getty';
     let GETTY_TO_PD = {};
 
-    document.querySelectorAll('#msSwitcher button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const newMs = btn.dataset.ms;
-        const wasMs = activeMs;
-        activeMs = newMs;
-        document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.ms-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('ms-' + activeMs).classList.add('active');
+    function switchMs(newMs) {
+      const wasMs = activeMs;
+      activeMs = newMs;
+      document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`#msSwitcher [data-ms="${newMs}"]`).classList.add('active');
 
-        // Cross-navigate to equivalent folio
-        if (wasMs === 'getty' && newMs === 'pd') {
-          const gettyId = FOLIOS[currentFolio]?.id;
-          const pdIds = GETTY_TO_PD[gettyId];
-          if (pdIds && pdIds.length > 0) {
-            const pdIdx = PD_FOLIOS.findIndex(f => f.id === pdIds[0]);
-            if (pdIdx >= 0) showPdFolio(pdIdx);
-          }
-        } else if (wasMs === 'pd' && newMs === 'getty') {
-          const pdFol = PD_FOLIOS[currentPdFolio];
-          if (pdFol?.getty_equiv) {
-            const gettyIdx = FOLIOS.findIndex(f => f.id === pdFol.getty_equiv);
-            if (gettyIdx >= 0) showFolio(gettyIdx);
-          }
+      // Toggle folio strips
+      document.getElementById('folioStrip').style.display = newMs === 'getty' ? '' : 'none';
+      document.getElementById('pdFolioStrip').style.display = newMs === 'pd' ? '' : 'none';
+      document.getElementById('sectionNav').style.display = newMs === 'getty' ? '' : 'none';
+
+      // Show/hide d'amore detail
+      document.getElementById('pdDetailFigure').style.display = newMs === 'pd' ? '' : 'none';
+
+      // Cross-navigate to equivalent folio
+      if (wasMs === 'getty' && newMs === 'pd') {
+        const gettyId = FOLIOS[currentFolio]?.id;
+        const pdIds = GETTY_TO_PD[gettyId];
+        if (pdIds && pdIds.length > 0) {
+          const pdIdx = PD_FOLIOS.findIndex(f => f.id === pdIds[0]);
+          if (pdIdx >= 0) { showPdFolio(pdIdx); return; }
         }
-      });
+        // No equivalent — show first PD folio
+        if (PD_FOLIOS.length > 0) showPdFolio(currentPdFolio);
+      } else if (wasMs === 'pd' && newMs === 'getty') {
+        const pdFol = PD_FOLIOS[currentPdFolio];
+        if (pdFol?.getty_equiv) {
+          const gettyIdx = FOLIOS.findIndex(f => f.id === pdFol.getty_equiv);
+          if (gettyIdx >= 0) { showFolio(gettyIdx); return; }
+        }
+        showFolio(currentFolio);
+      }
+    }
+
+    document.querySelectorAll('#msSwitcher button').forEach(btn => {
+      btn.addEventListener('click', () => switchMs(btn.dataset.ms));
     });
 
     // ── PD Folio Browser ─────────────────────────
@@ -1317,7 +1319,7 @@
     function showPdFolio(idx) {
       currentPdFolio = idx;
       const fol = PD_FOLIOS[idx];
-      const viewer = document.getElementById('pdFolioViewer');
+      const viewer = document.getElementById('folioViewer');
 
       // Update strip
       document.querySelectorAll('#pdFolioStrip button').forEach((btn, i) => {
@@ -1342,7 +1344,7 @@
         <div class="text-panel">
           <div class="folio-heading">
             Carta ${fol.id}
-            ${fol.getty_equiv ? `<span class="section-tag" style="cursor:pointer;" onclick="document.querySelector('[data-ms=getty]').click(); const gi=FOLIOS.findIndex(f=>f.id==='${fol.getty_equiv}'); if(gi>=0) showFolio(gi);">≈ Getty ${fol.getty_equiv}</span>` : ''}
+            ${fol.getty_equiv ? `<span class="section-tag" style="cursor:pointer;" onclick="switchMs('getty'); const gi=FOLIOS.findIndex(f=>f.id==='${fol.getty_equiv}'); if(gi>=0) showFolio(gi);">&rarr; Getty ${fol.getty_equiv}</span>` : ''}
           </div>
 
           <div class="translation-tabs" id="pdTransTabs">
@@ -1373,7 +1375,7 @@
       document.querySelectorAll('#pdTransTabs button').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#pdTransTabs button').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('#pdFolioViewer .tab-content').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('#folioViewer .tab-content').forEach(t => t.classList.remove('active'));
           btn.classList.add('active');
           document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
         });
@@ -1381,8 +1383,8 @@
 
       // Image zoom for PD
       const img = document.getElementById('pdFolioImg');
-      const overlay = document.getElementById('zoomOverlay');
       if (img) {
+        const overlay = document.getElementById('zoomOverlay');
         img.addEventListener('click', () => {
           img.classList.toggle('zoomed');
           overlay.classList.toggle('visible');
