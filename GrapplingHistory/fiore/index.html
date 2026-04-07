@@ -1301,10 +1301,22 @@
       });
 
       if (fol.blank) {
+        const imgSrc = `images/fol_${fol.id}.webp`;
         viewer.innerHTML = `
-          <div style="grid-column: 1 / -1;">
+          <div class="folio-image-wrap">
+            <img src="${imgSrc}" alt="Folio ${fol.id}" loading="lazy"
+                 onerror="this.style.visibility='hidden';"
+                 style="opacity: 0.3;">
+            <div class="folio-label">Folio ${fol.id}</div>
+          </div>
+          <div class="text-panel">
+            <div class="folio-heading">
+              Folio ${fol.id}
+              <span class="section-tag" style="opacity:0.5;">Blank page</span>
+            </div>
+            ${renderNav(idx, 'compact')}
             <div class="blank-notice">
-              Folio ${fol.id} &mdash; blank page
+              This folio is blank in the manuscript.
             </div>
             ${renderNav(idx)}
           </div>`;
