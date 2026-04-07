@@ -413,9 +413,8 @@
     .coda a { color: var(--accent); text-decoration: none; }
     .coda a:hover { text-decoration: underline; }
 
-    /* ── Analysis Panels ────────────────────────────── */
+    /* ── Analysis / Lexicon Section ──────────────────── */
     .analysis-section {
-      margin: var(--xxl) 0;
       max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
     }
     .analysis-section h2 {
@@ -423,15 +422,6 @@
       font-weight: 700;
       letter-spacing: -0.01em;
       margin-bottom: var(--sm);
-    }
-    .analysis-section h2 .section-num {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--fg-faint);
-      line-height: 1;
-      display: block;
-      font-family: var(--font-ui);
-      margin-bottom: var(--xs);
     }
     .analysis-intro {
       font-size: 1.05rem;
@@ -560,34 +550,6 @@
       line-height: 1.5;
     }
 
-    /* ── Panel Toggle ──────────────────────────────── */
-    .panel-tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 2px solid var(--rule);
-      margin-bottom: var(--lg);
-    }
-    .panel-tabs button {
-      font-family: var(--font-ui);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: var(--sm) var(--lg);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      color: var(--fg-muted);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .panel-tabs button:hover { color: var(--fg); }
-    .panel-tabs button.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-    .panel-content { display: none; }
-    .panel-content.active { display: block; }
-
     /* ── Source Links ───────────────────────────────── */
     a.src-link {
       color: var(--accent);
@@ -624,52 +586,7 @@
       padding: var(--xxl);
     }
 
-    /* ── Search Bar ─────────────────────────────────── */
-    .search-bar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--bg);
-      border-bottom: 1px solid var(--rule);
-      padding: var(--sm) 0;
-    }
-    .search-inner {
-      display: flex;
-      gap: var(--sm);
-      align-items: center;
-      max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
-      margin: 0 auto;
-      padding: 0 var(--lg);
-    }
-    .search-inner input {
-      flex: 1;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      padding: var(--xs) var(--sm);
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      background: var(--bg);
-      color: var(--fg);
-      outline: none;
-    }
-    .search-inner input:focus { border-color: var(--accent); }
-    .search-inner .search-status {
-      font-family: var(--font-ui);
-      font-size: 0.72rem;
-      color: var(--fg-muted);
-      white-space: nowrap;
-    }
-    .search-inner button {
-      font-family: var(--font-ui);
-      font-size: 0.75rem;
-      padding: var(--xs) var(--sm);
-      background: none;
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      color: var(--fg-muted);
-      cursor: pointer;
-    }
-    .search-inner button:hover { border-color: var(--fg-muted); color: var(--fg); }
+    /* ── Search Highlights ──────────────────────────── */
     .search-hit { background: rgba(139, 69, 19, 0.2); }
     .search-hit-current { background: rgba(139, 69, 19, 0.45); }
 
@@ -723,328 +640,455 @@
       .page { padding: var(--lg) var(--md); }
       .folio-image-wrap { position: static; }
     }
+
+    /* ── Site Navigation ────────────────────────────── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+      padding: var(--xs) 0;
+    }
+    .site-nav-inner {
+      display: flex; align-items: center; gap: var(--md);
+      max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
+      margin: 0 auto; padding: 0 var(--lg);
+    }
+    .site-nav .nav-title {
+      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600;
+      color: var(--fg); text-decoration: none; white-space: nowrap;
+    }
+    .site-nav .nav-tabs { display: flex; gap: 0; }
+    .site-nav .nav-tabs button {
+      font-family: var(--font-ui); font-size: 0.78rem; font-weight: 500;
+      padding: var(--sm) var(--md); background: none; border: none;
+      border-bottom: 2px solid transparent; color: var(--fg-muted);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .site-nav .nav-tabs button:hover { color: var(--fg); }
+    .site-nav .nav-tabs button.active {
+      color: var(--accent); border-bottom-color: var(--accent);
+    }
+    .site-nav .nav-search {
+      margin-left: auto;
+      display: flex; gap: var(--xs); align-items: center;
+    }
+    .site-nav .nav-search input {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: var(--xs) var(--sm);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      background: var(--bg);
+      color: var(--fg);
+      outline: none;
+      width: 18ch;
+    }
+    .site-nav .nav-search input:focus { border-color: var(--accent); width: 28ch; }
+    .site-nav .nav-search .search-status {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+    .site-nav .nav-search button {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      padding: var(--xs) var(--sm);
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--fg-muted);
+      cursor: pointer;
+    }
+    .site-nav .nav-search button:hover { border-color: var(--fg-muted); color: var(--fg); }
+
+    /* ── Page Panels ────────────────────────────────── */
+    .page-panel { display: none; }
+    .page-panel.active { display: block; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- ── Search Bar (Ctrl+F / Cmd+K) ──────────── -->
-  <div class="search-bar" id="searchBar">
-    <div class="search-inner">
-      <input type="text" id="searchInput" placeholder="Search all folios (Italian, English, notes)…" autocomplete="off">
-      <span class="search-status" id="searchStatus"></span>
-      <button id="searchPrev" title="Previous (Shift+Enter)">&#9650;</button>
-      <button id="searchNext" title="Next (Enter)">&#9660;</button>
-      <button id="searchClose" title="Close (Esc)">&times;</button>
+  <!-- ── Site Navigation ──────────────────────────── -->
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="nav-title" href="#">Fiore dei Liberi</a>
+      <div class="nav-tabs" id="navTabs">
+        <button class="active" data-panel="manuscript">Manuscript</button>
+        <button data-panel="lexicon">Lexicon</button>
+        <button data-panel="analysis">Analysis</button>
+        <button data-panel="about">About</button>
+      </div>
+      <div class="nav-search">
+        <input type="text" id="searchInput" placeholder="Search folios..." autocomplete="off">
+        <span class="search-status" id="searchStatus"></span>
+        <button id="searchPrev" title="Previous (Shift+Enter)">&#9650;</button>
+        <button id="searchNext" title="Next (Enter)">&#9660;</button>
+        <button id="searchClose" title="Close (Esc)">&times;</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 1: Manuscript (default) ──────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel active" id="panel-manuscript">
+    <div class="page">
+
+      <!-- ── Epigraph ────────────────────────────── -->
+      <div class="epigraph">
+        <blockquote>
+          E comiçemo al braçare. L'oquale sie di dua razone: come da plazo e di ira, coe per la uita cu ogni inzano e falsira e crudelita che si po fare.
+        </blockquote>
+        <div class="attribution">
+          "And we begin with grappling. Which is of two kinds: one from pleasure, and one from anger — that is, for one's life, with every cunning and deception and cruelty that can be done." — Folio 2r
+        </div>
+      </div>
+
+      <!-- ── Lead ────────────────────────────────── -->
+      <p class="lead">
+        Written around 1400 by the knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise, covering both unarmed and armed grappling across 47 folios of illustrated instruction.
+      </p>
+
+      <!-- ── Manuscript Switcher ──────────────────── -->
+      <div class="ms-switcher" id="msSwitcher">
+        <button class="active" data-ms="getty">Getty (c. 1400s)</button>
+        <button data-ms="pd">Pisani Dossi (1409)</button>
+      </div>
+
+      <!-- ── Section Nav (shared, rebuilds on MS switch) -->
+      <nav class="section-nav" id="sectionNav"></nav>
+
+      <!-- ── Folio Strips ──────────────────────────── -->
+      <div class="folio-strip" id="folioStrip"></div>
+      <div class="folio-strip" id="pdFolioStrip" style="display: none;"></div>
+
+      <!-- ── Shared Viewer ───────────────────────── -->
+      <div class="zoom-overlay" id="zoomOverlay"></div>
+      <div class="folio-viewer" id="folioViewer">
+        <div class="loading">Loading manuscript data...</div>
+      </div>
+
+      <!-- ── d'amore Detail (below viewer, PD only) -->
+      <figure class="detail-figure" id="pdDetailFigure" style="max-width: 640px; margin-top: var(--xl); display: none;">
+        <img src="images/pd_02a_damore_detail.webp" alt="Detail: le prese se fa d'amore e non da ira">
+        <figcaption>
+          Carta 2a: <em>"le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>... tal volta se fa da ira e alguna volta <strong>per la vita</strong>"</em> — three terms in the original 1409 hand. The Getty (c. 1400s) uses <em>solaço</em> where this says <em>d'amore</em>.
+        </figcaption>
+      </figure>
+
+      <!-- ── Coda ────────────────────────────────── -->
+      <div class="coda">
+        <p>
+          Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
+          Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
+          Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
+          OCR &amp; additional translation: Claude Vision, 2026.<br>
+          Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.<br>
+          <a href="about.html">About this project</a> — tools, sources, accuracy caveats, and lessons learned.
+        </p>
+      </div>
+
     </div>
   </div>
 
-  <div class="page">
-    <!-- ── Header ──────────────────────────────── -->
-    <div class="eyebrow">History of Grappling · c. 1410</div>
-    <h1 class="headline">Fiore dei Liberi</h1>
-    <p class="subhead">Fior di Battaglia — The Flower of Battle</p>
-    <hr class="header-rule">
-    <div class="meta-line">
-      <span>Getty MS Ludwig XV 13</span>
-      <span>Cividale del Friuli, Patriarchate of Aquileia</span>
-      <span>47 folios, 91 pages</span>
-      <span><a href="about.html" style="color: var(--accent);">About</a></span>
-    </div>
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 2: Lexicon ───────────────────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel" id="panel-lexicon">
+    <div class="page">
 
-    <!-- ── Epigraph ────────────────────────────── -->
-    <div class="epigraph">
-
-      <blockquote>
-        E comiçemo al braçare. L'oquale sie di dua razone: come da plazo e di ira, coe per la uita cu ogni inzano e falsira e crudelita che si po fare.
-      </blockquote>
-      <div class="attribution">
-        "And we begin with grappling. Which is of two kinds: one from pleasure, and one from anger — that is, for one's life, with every cunning and deception and cruelty that can be done." — Folio 2r
-      </div>
-    
-    </div>
-
-    <!-- ── Lead ────────────────────────────────── -->
-    <p class="lead">
-
-      Written around 1410 by the Friulian knight and fencing master Fiore Furlano de'i Liberi, the <em>Fior di Battaglia</em> is the most complete surviving medieval Italian combat treatise. Dedicated to Niccolò III d'Este, Marquis of Ferrara, it covers unarmed grappling, dagger, sword in one and two hands, armored combat, poleaxe, spear, and mounted fighting. The Getty manuscript — the most complete of four surviving copies — contains 47 folios of illustrated instruction, each play spoken in the voice of the figure performing it.
-    
-    </p>
-
-    <!-- ── Analysis & Lexicon ──────────────────── -->
-    <div class="analysis-section">
-
-      <div class="panel-tabs" id="analysisTabs">
-        <button class="active" data-panel="lexicon">Lexicon</button>
-        <button data-panel="sentiment">Voice &amp; Sentiment</button>
-      </div>
-
-      <!-- ── Lexicon Panel ──────────────────────── -->
-      <div class="panel-content active" id="panel-lexicon">
-        <p class="analysis-intro">
-          Fiore writes in Middle Italian (Venetian dialect, c. 1410). His technical vocabulary maps directly onto modern combat sports concepts — the words encode distinctions that practitioners still navigate today.
-        </p>
-
-        <div class="lexicon-grid">
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Solaço / Ira
-              <span class="lex-pos">noun pair</span>
-              <span class="lex-freq">3 occurrences · fol. 2r, 10v</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”Pleasure” vs. “Anger.”</span> The Getty (fol. 2r) distinguishes <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”>two kinds of grappling</a> (<em>dua razone</em>): <em>da solaço</em> — from pleasure, cooperative — vs. <em>di ira</em> — from anger, <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”cu ogni inganno e falsita e crudelita”>”with every cunning and deception and cruelty that can be done”</a>. The same technique belongs to both categories; only intent transforms it.
-              <div class="lex-modern"><strong>Modern parallel:</strong> The distinction between drilling/positional sparring (solaço) and full competition or self-defense (ira) is reminiscent of how combat sports gym operates in terms of intensity variations.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Sbarra / Starria
-              <span class="lex-pos">noun</span>
-              <span class="lex-freq">8 occurrences · fol. 1r, 2r</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”The barriers” or “the lists.”</span> A fenced enclosure for formal judicial combat. When Fiore says a student <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”debea cobattere”><em>”debea cobattere m[en] Starria”</em></a> — had to fight in the barriers — he means a legal duel with witnesses, stakes, and rules. Armoured, with specified weapons, often before nobility. Dangerous but survivable: <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”rare that anyone dies”>”nine times out of ten nobody dies, because they are taken prisoner”</a> (Hatcher, fol. 1v–2r).
-              <figure style="margin: var(--md) 0; max-width: 380px;">
-                <img src="images/sbarra.webp" alt="Watercolor rendition of a 14th-century sbarra — a fenced enclosure for judicial combat" style="width: 100%; border-radius: 3px; border: 1px solid var(--rule);">
-                <figcaption style="font-family: var(--font-ui); font-size: 0.7rem; color: var(--fg-faint); margin-top: var(--xs); line-height: 1.4;">Modern rendition of what a 14th-century Sbarra might have looked like — a fenced enclosure with a viewing stand for nobility.</figcaption>
-              </figure>
-              <div class="lex-modern"><strong>Modern parallel:</strong> The closest analogue is MMA or professional fighting — a very violent contest that nonetheless has rules, a referee, and a cage. Fiore explicitly distinguishes this from both training (solaço) and mortal combat (<em>ad oltrança</em>).</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Oltrança
-              <span class="lex-pos">noun / adverb</span>
-              <span class="lex-freq">2 occurrences · fol. 1r</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”To the utterance” / “to the extreme.”</span> Fighting <em>ad oltrança</em> means to death or surrender. Either in the barriers or in the battlefield. This is the context where <em>ira</em> techniques apply — <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”in li ochi, e lo naso, e le tempie”>strikes to the eyes, nose, temples, chin, and flanks</a> (Getty fol. 2r). Fiore teaches both tiers in the same system; the student must know which techniques belong to which context.
-              <div class=”lex-modern”><strong>Modern parallel:</strong> Self-defense vs. sport — the techniques that are <a class=”src-link” data-folio=”02r” data-tab=”pisani_dossi” data-search=”cannot be practiced with courtesy”>”too dangerous to practice with courtesy”</a> (Hatcher, PD carta 2a) are the ones illegal in competition. Fiore documents them alongside the legal ones and trusts the student to know the difference.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Çogho / Zogho
-              <span class="lex-pos">noun</span>
-              <span class="lex-freq">57 occurrences · 26 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class="lex-gloss">“Play” or “game.”</span> Every technique is a <em>zogho</em>. Not metaphorical — the same word means both a game and a combat technique. <em>Zogho largo</em> = wide play (long range). <em>Zogho stretto</em> = narrow play (close range, grappling distance). The word itself encodes the training/fighting ambiguity: every “game” is also a “fight,” and every “fight” is also a “game.”
-              <div class="lex-modern"><strong>Modern parallel:</strong> “Rolling” in BJJ, “randori” in judo, your "A-Game", etc.&nbsp; The ludic framing is ancient.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Zugadore / Çugadore
-              <span class="lex-pos">noun</span>
-              <span class="lex-freq">26 occurrences · 9 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class="lex-gloss">“Player.”</span> The person being thrown or controlled in a technique demonstration. Fiore’s deliberate choice over “enemy” or “adversary” — the <em>zugadore</em> is the one who attacks so the master or scholar can demonstrate the response. In illustrations, the player wears no insignia (no crown, no garter).
-              <div class="lex-modern"><strong>Modern parallel:</strong> Uke in judo/aikido — the training partner who feeds the attack. Fiore’s choice of “player” over “attacker” reveals a system designed around cooperative practice, even when documenting lethal techniques.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Prese
-              <span class="lex-pos">noun, plural</span>
-              <span class="lex-freq">59 occurrences · 25 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”Holds” or “grips.”</span> The atomic unit of <em>abrazare</em>. The Getty (fol. 2r) frames holds within the <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”><em>solaço/ira</em></a> distinction — holds practiced in pleasure vs. holds for real combat. The Pisani Dossi (carta 2a) adds that certain holds are <a class=”src-link” data-folio=”02r” data-tab=”pisani_dossi” data-search=”cannot be practiced with courtesy”><em>”prese e zoghi che non se po çugar de cortesia”</em> — holds and plays that cannot be played with courtesy</a>. Separately, at the grappling guards opening, Hatcher renders: <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Holds are not superior”>”Holds are not superior unless they give you an advantage”</a> (fol. 6r).
-              <div class="lex-modern"><strong>Modern parallel:</strong> Grips in wrestling, judo, BJJ. The concept that a grip is not just contact but <em>control with intent</em> is universal across grappling traditions.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Posta
-              <span class="lex-pos">noun</span>
-              <span class="lex-freq">269 occurrences · 61 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”Guard” or “position.”</span> Literally “post” or “station” — where you stand and wait. Every weapon section opens with guards. In grappling: <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Long Guard”><em>Posta Longa</em></a> (Long Guard), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Boar”><em>Dente di Cengiaro</em></a> (Boar’s Tusk), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Iron Gate”><em>Porta di Ferro</em></a> (Iron Gate), <a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”Forehead”><em>Posta Frontale</em></a> (Forehead Guard). Each guard is a persona that speaks in first person, declaring its nature. The most frequent technical term in the manuscript.
-              <div class="lex-modern"><strong>Modern parallel:</strong> Stance in wrestling/MMA, posture in BJJ. The concept of named positions as starting points for all technique has never left grappling.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Ligadure / Roture
-              <span class="lex-pos">noun pair</span>
-              <span class="lex-freq">19 occurrences · 8 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”Binds” and “breaks.”</span> The two outcomes of a successful hold. <em>Ligadure</em> = locks, joint control (<a class=”src-link” data-folio=”04r” data-tab=”italian” data-search=”ligar braci in modo”>binding the arm so “he has no more defense nor can free himself”</a>, Getty fol. 4r). <em>Roture</em> = breaks, dislocations (<a class=”src-link” data-folio=”04r” data-tab=”italian” data-search=”romper braci e çambe”>”breaking arms and legs”</a>, Getty fol. 4r). Listed as two of the eight attributes of grappling. The distinction is control vs. destruction.
-              <div class="lex-modern"><strong>Modern parallel:</strong> Submissions in BJJ split along the same line — you can control (pin, hold) or finish (break, choke). The <em>ligadure/roture</em> pair maps to the tap-or-snap decision.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Remedio / Contrario
-              <span class="lex-pos">noun pair</span>
-              <span class="lex-freq">102 occurrences · 43 folios</span>
-            </div>
-            <div class="lex-body">
-              <span class="lex-gloss">“Remedy” and “Counter.”</span> The pedagogical chain that structures the entire book. The <em>Magistro Remedio</em> (Remedy Master) shows a defense. His scholars demonstrate variations. The <em>Magistro Contrario</em> (Counter Master) defeats the remedy. Occasionally a fourth master (<em>Contra-Contrario</em>) defeats the counter. Three-deep, sometimes four. Each wears insignia: crowns for masters, garters for scholars.
-              <div class="lex-modern"><strong>Modern parallel:</strong> The technique → counter → re-counter chain is the backbone of every grappling curriculum. Fiore formalised it with a visual system (crowns and garters) six centuries before modern instructionals.</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Armiçare
-              <span class="lex-pos">verb / noun</span>
-              <span class="lex-freq">5 occurrences · fol. 1r, 2r, 4r</span>
-            </div>
-            <div class="lex-body">
-              <span class=”lex-gloss”>”The art of armed fighting” / “to fight with arms.”</span> Fiore’s name for his complete system: <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”armiçare”><em>L’Arte d’Armiçare</em></a> or <em>La Scientia d’Armiçare</em>. Notably, <em>arte</em> may mean simply “skill” and <em>scientia</em> “knowledge” — “the skill and knowledge of fighting.” He explicitly compares it to law and medicine: <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”studied forty years in civil law”>”If I had studied forty years in civil law… I would be a doctor in those three sciences”</a> (Hatcher, fol. 2r).
-              <div class="lex-modern"><strong>Modern parallel:</strong> The claim that martial arts is an intellectual discipline requiring systematic study and documentation — not just physical talent — is Fiore’s most modern argument. It anticipates every debate about “is fighting an art or a sport?”</div>
-            </div>
-          </div>
-
-          <div class="lex-entry">
-            <div class="lex-term">
-              Abrazare
-              <span class="lex-pos">verb / noun</span>
-              <span class="lex-freq">11 occurrences · fol. 2r, 4r</span>
-            </div>
-            <div class="lex-body">
-              <span class="lex-gloss">“To grapple” / “grappling.”</span> Literally “to embrace.” The first section of the treatise and the foundation of the whole system. Fiore lists eight attributes: strength, speed, advantageous holds, breaks, binds, strikes to vulnerable points, throws, and dislocations. The Pisani Dossi lists seven (combining the last two). This is the section where the <em>solaço/ira</em> distinction is introduced.
-              <div class="lex-modern"><strong>Modern parallel:</strong> The word itself — “embrace” — captures the intimacy of grappling that distinguishes it from striking. Fiore begins here, before weapons, because grappling is where all armed combat ends up at close range.</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ── Sentiment Panel ───────────────────────── -->
-      <div class="panel-content" id="panel-sentiment">
-        <p class="analysis-intro">
-          The manuscript operates in six distinct rhetorical modes, often layered within a single passage. This is not a manual in the modern sense — it is a <strong>dramatic performance on parchment</strong>, where each figure speaks in first person, boasting, threatening, and instructing simultaneously.
-        </p>
-
-        <div class="mode-grid">
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">Conditional Tactics</span>
-              <span class="mode-count">98 passages</span>
-            </div>
-            <div class="mode-where">Densest in Grappling, Dagger, Sword</div>
-            <blockquote><a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”if that lock looks like it will fail”>”And if that lock looks like it will fail me, then I will switch to one of the other locks that follow.”</a></blockquote>
-            <div class="mode-insight">The “if… then… alternatively” structure maps directly to how modern coaches teach: primary technique → read the reaction → follow-up. Evidence that Fiore’s abrazare is a <strong>flowchart-based system</strong>, not a technique catalogue.</div>
-          </div>
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">Threat to Opponent</span>
-              <span class="mode-count">94 passages</span>
-            </div>
-            <div class="mode-where">Everywhere — densest in Grappling + Dagger</div>
-            <blockquote><a class=”src-link” data-folio=”07r” data-tab=”hatcher” data-search=”press my thumb under your ear”>”When I press my thumb under your ear you will feel so much pain that you will go to the ground for sure.”</a></blockquote>
-            <div class="mode-insight">The violence is the specification. “Force you to the ground” is the functional description; “pain and suffering” is the consequence that motivates learning both the technique <em>and its counter</em>.</div>
-          </div>
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">First-Person Boast</span>
-              <span class="mode-count">60 passages</span>
-            </div>
-            <div class="mode-where">Guards, Seven Swords, section openers</div>
-            <blockquote><a class=”src-link” data-folio=”06r” data-tab=”hatcher” data-search=”I am the Iron Gate”>”I am the Iron Gate, full of danger. Those who oppose me will always end up in pain and suffering.”</a></blockquote>
-            <div class="mode-insight">Each guard is a <strong>persona</strong> with a voice. The boast is the mnemonic — you remember what the Iron Gate does because the Iron Gate <em>tells you</em>. Persona-based pedagogy.</div>
-          </div>
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">Counter-Rhetoric</span>
-              <span class="mode-count">50 passages</span>
-            </div>
-            <div class="mode-where">Dagger, Mounted — “I make the counter to the play before me”</div>
-            <blockquote><a class=”src-link” data-folio=”10r” data-tab=”hatcher” data-search=”What you plan to do cannot always be done”>”What you plan to do cannot always be done.”</a></blockquote>
-            <div class="mode-insight">The counter always references the previous technique explicitly, creating a <strong>linked-list structure</strong>. Each counter acknowledges the validity of what it defeats — not dismissal but dialectic. The system teaches through opposition.</div>
-          </div>
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">Philosophical</span>
-              <span class="mode-count">48 passages</span>
-            </div>
-            <div class="mode-where">Preface almost exclusively</div>
-            <blockquote><a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”no man in the world with so great a memory”>”This art is so vast that there is no man in the world with so great a memory that he could keep in mind without books a quarter of this art.”</a></blockquote>
-            <div class="mode-insight">Fiore claims intellectual parity with law and medicine. The <em>solaço/ira</em> passage isn’t just a preface remark — it’s the emotional architecture of the whole manuscript. Guards are theatrical (solaço), grappling plays are violent (ira), counters are dialectical.</div>
-          </div>
-
-          <div class="mode-card">
-            <div class="mode-header">
-              <span class="mode-name">Autobiographical</span>
-              <span class="mode-count">33 passages</span>
-            </div>
-            <div class="mode-where">Preface only (fol. 1r–2r), then Fiore disappears</div>
-            <blockquote><a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”five times, for my honor”>”Five times, for my honor, I was compelled to fight in strange places, without relatives and without friends, having no hope except in God, in my art, and in my sword.”</a></blockquote>
-            <div class="mode-insight">Fiore front-loads all personal history then vanishes. The figures take over. The separation is deliberate: author-as-credentialed-expert (preface) vs. system-as-self-demonstrating (body). He fought five duels because envious masters challenged him — he won all five, unarmoured, with sharp swords.</div>
-          </div>
-
-        </div>
-
-        <p class="analysis-intro" style="margin-top: var(--lg);">
-          <strong>Fiore's contexts of combat.</strong> The Getty (fol. 2r) names <a class=”src-link” data-folio=”02r” data-tab=”italian” data-search=”come da solaço e di ira”>two kinds</a>: <em>solaço</em> (pleasure — cooperative practice) and <em>ira</em> (anger — for one's life). Separately, in fol. 1r–1v, he discusses <em>sbarra</em> (the barriers — formal armoured combat, where <a class=”src-link” data-folio=”02r” data-tab=”hatcher” data-search=”rare that anyone dies”>”it is rare that anyone dies”</a>) and contrasts it with unarmoured duelling with sharp swords, where <a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”single mistake in your defense”>”a single mistake in your defense could cost you your life.”</a> Critically, the barriers can themselves be <a class=”src-link” data-folio=”01r” data-tab=”italian” data-search=”starra a oltrança”><em>a oltrança</em></a> — to the death. So armour and rules don't eliminate lethality; they reduce it. Fiore teaches one system across all these contexts. When <a class=”src-link” data-folio=”01v” data-tab=”hatcher” data-search=”five times, for my honor”>envious masters forced him to fight five times</a> — unarmoured, with sharp swords, in strange places — he proved it worked.
-        </p>
-      </div>
-    
-    <!-- ── Manuscript Switcher ──────────────────── -->
-    <div class="ms-switcher" id="msSwitcher">
-      <button class="active" data-ms="getty">Getty (c. 1400s)</button>
-      <button data-ms="pd">Pisani Dossi (1409)</button>
-    </div>
-
-    <!-- ── Section Nav (shared, rebuilds on MS switch) -->
-    <nav class="section-nav" id="sectionNav"></nav>
-
-    <!-- ── Shared Folio Strip ──────────────────── -->
-    <div class="folio-strip" id="folioStrip"></div>
-    <div class="folio-strip" id="pdFolioStrip" style="display:none;"></div>
-
-    <!-- ── Shared Viewer ───────────────────────── -->
-    <div class="zoom-overlay" id="zoomOverlay"></div>
-    <div class="folio-viewer" id="folioViewer">
-      <div class="loading">Loading manuscript data&hellip;</div>
-    </div>
-
-    <!-- ── d'amore Detail (below viewer) ─────── -->
-    <figure class="detail-figure" id="pdDetailFigure" style="max-width: 640px; display: none; margin-top: var(--xl);">
-      <img src="images/pd_02a_damore_detail.webp" alt="Detail: le prese se fa d'amore e non da ira">
-      <figcaption>
-        Carta 2a: <em>&ldquo;le prese se fa <strong>d'amore</strong> e no da <strong>ira</strong>&hellip; tal volta se fa da ira e alguna volta <strong>per la vita</strong>&rdquo;</em> &mdash; three terms in the original 1409 hand. The Getty (c. 1400s) uses <em>sola&ccedil;o</em> where this says <em>d'amore</em>.
-      </figcaption>
-    </figure>
-
-    <!-- ── Coda ────────────────────────────────── -->
-    <div class="coda">
-      <p>
-        Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
-        Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
-        Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
-        OCR &amp; additional translation: Claude Vision, 2026.<br>
-        Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.<br>
-        <a href="about.html">About this project</a> &mdash; tools, sources, accuracy caveats, and lessons learned.
+      <p class="analysis-intro">
+        Fiore writes in Middle Italian (Venetian dialect, c. 1410). His technical vocabulary maps directly onto modern combat sports concepts — the words encode distinctions that practitioners still navigate today.
       </p>
+
+      <div class="lexicon-grid">
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Solaço / Ira
+            <span class="lex-pos">noun pair</span>
+            <span class="lex-freq">3 occurrences · fol. 2r, 10v</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Pleasure" vs. "Anger."</span> The Getty (fol. 2r) distinguishes <a class="src-link" data-folio="02r" data-tab="italian" data-search="come da solaço e di ira">two kinds of grappling</a> (<em>dua razone</em>): <em>da solaço</em> — from pleasure, cooperative — vs. <em>di ira</em> — from anger, <a class="src-link" data-folio="02r" data-tab="italian" data-search="cu ogni inganno e falsita crudelita">"with every cunning and deception and cruelty that can be done"</a>. The same technique belongs to both categories; only intent transforms it.
+            <div class="lex-modern"><strong>Modern parallel:</strong> The distinction between drilling/positional sparring (solaço) and full competition or self-defense (ira) is reminiscent of how combat sports gym operates in terms of intensity variations.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Sbarra / Starria
+            <span class="lex-pos">noun</span>
+            <span class="lex-freq">8 occurrences · fol. 1r, 2r</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"The barriers" or "the lists."</span> A fenced enclosure for formal judicial combat. When Fiore says a student <a class="src-link" data-folio="01r" data-tab="italian" data-search="debea cobattere"><em>"debea cobattere m[en] Starria"</em></a> — had to fight in the barriers — he means a legal duel with witnesses, stakes, and rules. Armoured, with specified weapons, often before nobility. Dangerous but survivable: <a class="src-link" data-folio="02r" data-tab="hatcher" data-search="rare that anyone dies">"nine times out of ten nobody dies, because they are taken prisoner"</a> (Hatcher, fol. 1v–2r).
+            <figure style="margin: var(--md) 0; max-width: 380px;">
+              <img src="images/sbarra.webp" alt="Watercolor rendition of a 14th-century sbarra — a fenced enclosure for judicial combat" style="width: 100%; border-radius: 3px; border: 1px solid var(--rule);">
+              <figcaption style="font-family: var(--font-ui); font-size: 0.7rem; color: var(--fg-faint); margin-top: var(--xs); line-height: 1.4;">Modern rendition of what a 14th-century Sbarra might have looked like — a fenced enclosure with a viewing stand for nobility.</figcaption>
+            </figure>
+            <div class="lex-modern"><strong>Modern parallel:</strong> The closest analogue is MMA or professional fighting — a very violent contest that nonetheless has rules, a referee, and a cage. Fiore explicitly distinguishes this from both training (solaço) and mortal combat (<em>ad oltrança</em>).</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Oltrança
+            <span class="lex-pos">noun / adverb</span>
+            <span class="lex-freq">2 occurrences · fol. 1r</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"To the utterance" / "to the extreme."</span> Fighting <em>ad oltrança</em> means to death or surrender. Either in the barriers or in the battlefield. This is the context where <em>ira</em> techniques apply — <a class="src-link" data-folio="02r" data-tab="italian" data-search="in li ochi, e lo naso, le tempie">strikes to the eyes, nose, temples, chin, and flanks</a> (Getty fol. 2r). Fiore teaches both tiers in the same system; the student must know which techniques belong to which context.
+            <div class="lex-modern"><strong>Modern parallel:</strong> Self-defense vs. sport — the techniques that are <a class="src-link" data-folio="02r" data-tab="pisani_dossi" data-search="cannot be practiced with courtesy">"too dangerous to practice with courtesy"</a> (Hatcher, PD carta 2a) are the ones illegal in competition. Fiore documents them alongside the legal ones and trusts the student to know the difference.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Çogho / Zogho
+            <span class="lex-pos">noun</span>
+            <span class="lex-freq">57 occurrences · 26 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Play" or "game."</span> Every technique is a <em>zogho</em>. Not metaphorical — the same word means both a game and a combat technique. <em>Zogho largo</em> = wide play (long range). <em>Zogho stretto</em> = narrow play (close range, grappling distance). The word itself encodes the training/fighting ambiguity: every "game" is also a "fight," and every "fight" is also a "game."
+            <div class="lex-modern"><strong>Modern parallel:</strong> "Rolling" in BJJ, "randori" in judo, your "A-Game", etc. The ludic framing is ancient.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Zugadore / Çugadore
+            <span class="lex-pos">noun</span>
+            <span class="lex-freq">26 occurrences · 9 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Player."</span> The person being thrown or controlled in a technique demonstration. Fiore's deliberate choice over "enemy" or "adversary" — the <em>zugadore</em> is the one who attacks so the master or scholar can demonstrate the response. In illustrations, the player wears no insignia (no crown, no garter).
+            <div class="lex-modern"><strong>Modern parallel:</strong> Uke in judo/aikido — the training partner who feeds the attack. Fiore's choice of "player" over "attacker" reveals a system designed around cooperative practice, even when documenting lethal techniques.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Prese
+            <span class="lex-pos">noun, plural</span>
+            <span class="lex-freq">59 occurrences · 25 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Holds" or "grips."</span> The atomic unit of <em>abrazare</em>. The Getty (fol. 2r) frames holds within the <a class="src-link" data-folio="02r" data-tab="italian" data-search="come da solaço e di ira"><em>solaço/ira</em></a> distinction of holds practiced for entertainment|training vs. real combat. The Pisani Dossi (carta 2a) adds that certain holds are <a class="src-link" data-folio="02r" data-tab="pisani_dossi" data-search="cannot be practiced with courtesy"><em>"prese e zoghi che non se po çugar de cortesia"</em> — holds and plays that cannot be played with courtesy</a>. Separately, at the grappling guards opening, Hatcher renders: <a class="src-link" data-folio="06r" data-tab="hatcher" data-search="Holds are not superior">"Holds are not superior unless they give you an advantage"</a> (fol. 6r).
+            <div class="lex-modern"><strong>Modern parallel:</strong> Grips in wrestling, judo, BJJ. The concept that a grip is not just contact but <em>control with intent</em> is universal across grappling traditions.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Posta
+            <span class="lex-pos">noun</span>
+            <span class="lex-freq">269 occurrences · 61 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Guard" or "position."</span> Literally "post" or "station" — where you stand and wait. Every weapon section opens with guards. In grappling: <a class="src-link" data-folio="06r" data-tab="hatcher" data-search="Long guard"><em>Posta Longa</em></a> (Long Guard), <a class="src-link" data-folio="06r" data-tab="hatcher" data-search="Boar"><em>Dente di Cengiaro</em></a> (Boar's Tusk), <a class="src-link" data-folio="06r" data-tab="hatcher" data-search="Iron gate"><em>Porta di Ferro</em></a> (Iron Gate), <a class="src-link" data-folio="06r" data-tab="hatcher" data-search="Forehead"><em>Posta Frontale</em></a> (Forehead Guard). Each guard is a persona that speaks in first person, declaring its nature. The most frequent technical term in the manuscript.
+            <div class="lex-modern"><strong>Modern parallel:</strong> Stance in wrestling/MMA, posture in BJJ. The concept of named positions as starting points for all technique has never left, and it's not just Chinese Kung Fu using fancy animal names.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Ligadure / Roture
+            <span class="lex-pos">noun pair</span>
+            <span class="lex-freq">19 occurrences · 8 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Binds" and "breaks."</span> The two outcomes of a successful hold. <em>Ligadure</em> = locks, joint control (<a class="src-link" data-folio="04r" data-tab="italian" data-search="ligar braci in modo">binding the arm so "he has no more defense nor can free himself"</a>, Getty fol. 4r). <em>Roture</em> = breaks, dislocations (<a class="src-link" data-folio="04r" data-tab="italian" data-search="romper braci e çambe">"breaking arms and legs"</a>, Getty fol. 4r). Listed as two of the eight attributes of grappling. The distinction is control vs. destruction.
+            <div class="lex-modern"><strong>Modern parallel:</strong> Submissions in BJJ split along the same line of control|pin and break|finish|submissions. The <em>ligadure/roture</em> pair maps to tap-or-snap.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Remedio / Contrario
+            <span class="lex-pos">noun pair</span>
+            <span class="lex-freq">102 occurrences · 43 folios</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"Remedy" and "Counter."</span> The pedagogical chain that structures the entire book. The <em>Magistro Remedio</em> (Remedy Master) shows a defense. His scholars demonstrate variations. The <em>Magistro Contrario</em> (Counter Master) defeats the remedy. Occasionally a fourth master (<em>Contra-Contrario</em>) defeats the counter. Three-deep, sometimes four. Each wears insignia: crowns for masters, garters for scholars.
+            <div class="lex-modern"><strong>Modern parallel:</strong> The technique → counter → re-counter chain is the backbone of every grappling curriculum. Fiore formalised it with a visual system (crowns and garters) six centuries before modern instructionals.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Armiçare
+            <span class="lex-pos">verb / noun</span>
+            <span class="lex-freq">5 occurrences · fol. 1r, 2r, 4r</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"The art of armed fighting" / "to fight with arms."</span> Fiore's name for his complete system: <a class="src-link" data-folio="01r" data-tab="italian" data-search="armiçare"><em>L'Arte d'Armiçare</em></a> or <em>La Scientia d'Armiçare</em>. Notably, <em>arte</em> may mean simply "skill" and <em>scientia</em> "knowledge" — "the skill and knowledge of fighting." He explicitly compares it to law and medicine: <a class="src-link" data-folio="02r" data-tab="hatcher" data-search="studied forty years in civil law">"If I had studied forty years in civil law... I would be a doctor in those three sciences"</a> (Hatcher, fol. 2r).
+            <div class="lex-modern"><strong>Modern parallel:</strong> The claim that martial arts is an intellectual discipline requiring systematic study and documentation, not just physical talent. Fiore's made quite a modern argument.</div>
+          </div>
+        </div>
+
+        <div class="lex-entry">
+          <div class="lex-term">
+            Abrazare
+            <span class="lex-pos">verb / noun</span>
+            <span class="lex-freq">11 occurrences · fol. 2r, 4r</span>
+          </div>
+          <div class="lex-body">
+            <span class="lex-gloss">"To grapple" / "grappling."</span> Literally "to embrace." The first section of the treatise and the foundation of the whole system. Fiore lists eight attributes: strength, speed, advantageous holds, breaks, binds, strikes to vulnerable points, throws, and dislocations. The Pisani Dossi lists seven (combining the last two). This is the section where the <em>solaço/ira</em> distinction is introduced.
+            <br><div class="lex-modern"><strong>Etymology:</strong> The word means "embrace" and captures the closeness distinguishing grappling from striking.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Coda ────────────────────────────────── -->
+      <div class="coda">
+        <p>
+          Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
+          Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
+          Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
+          OCR &amp; additional translation: Claude Vision, 2026.<br>
+          Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.<br>
+          <a href="about.html">About this project</a> — tools, sources, accuracy caveats, and lessons learned.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 3: Analysis ──────────────────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel" id="panel-analysis">
+    <div class="page">
+
+      <p class="analysis-intro">
+        The manuscript operates in six distinct rhetorical modes, often layered within a single passage. This is both a manual in the modern sense and a <strong>dramatic performance on parchment</strong>, where each figure speaks in first person, boasting, threatening, and instructing simultaneously.
+      </p>
+
+      <div class="mode-grid">
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">Conditional Tactics</span>
+            <span class="mode-count">98 passages</span>
+          </div>
+          <div class="mode-where">Densest in Grappling, Dagger, Sword</div>
+          <blockquote><a class="src-link" data-folio="06r" data-tab="hatcher" data-search="if that lock looks like it will fail">"And if that lock looks like it will fail me, then I will switch to one of the other locks that follow."</a></blockquote>
+          <div class="mode-insight">The "if... then... alternatively" structure maps directly to how modern coaches teach: primary technique → read the reaction → follow-up. Evidence that Fiore's abrazare is a <strong>flowchart-based system</strong>, not a technique catalogue.</div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">Threat to Opponent</span>
+            <span class="mode-count">94 passages</span>
+          </div>
+          <div class="mode-where">Everywhere — densest in Grappling + Dagger</div>
+          <blockquote><a class="src-link" data-folio="07r" data-tab="hatcher" data-search="press my thumb under your ear">"When I press my thumb under your ear you will feel so much pain that you will go to the ground for sure."</a></blockquote>
+          <div class="mode-insight">The violence is the specification. "Force you to the ground" is the functional description; "pain and suffering" is the consequence that motivates learning both the technique <em>and its counter</em>.</div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">First-Person Boast</span>
+            <span class="mode-count">60 passages</span>
+          </div>
+          <div class="mode-where">Guards, Seven Swords, section openers</div>
+          <blockquote><a class="src-link" data-folio="06r" data-tab="hatcher" data-search="I am the iron gate">"I am the Iron Gate, full of danger. Those who oppose me will always end up in pain and suffering."</a></blockquote>
+          <div class="mode-insight">Each guard is a <strong>persona</strong> with a voice. The boast is the mnemonic — you remember what the Iron Gate does because the Iron Gate <em>tells you</em>. Persona-based pedagogy.</div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">Counter-Rhetoric</span>
+            <span class="mode-count">50 passages</span>
+          </div>
+          <div class="mode-where">Dagger, Mounted — "I make the counter to the play before me"</div>
+          <blockquote><a class="src-link" data-folio="10r" data-tab="hatcher" data-search="What you plan to do cannot always be done">"What you plan to do cannot always be done."</a></blockquote>
+          <div class="mode-insight">The counter always references the previous technique explicitly, creating a <strong>linked-list structure</strong>. Each counter acknowledges the validity of what it defeats — not dismissal but dialectic. The system teaches through opposition.</div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">Philosophical</span>
+            <span class="mode-count">48 passages</span>
+          </div>
+          <div class="mode-where">Preface almost exclusively</div>
+          <blockquote><a class="src-link" data-folio="02r" data-tab="hatcher" data-search="no man in the world with so great a memory">"This art is so vast that there is no man in the world with so great a memory that he could keep in mind without books a quarter of this art."</a></blockquote>
+          <div class="mode-insight">Fiore claims intellectual parity with law and medicine. The <em>solaço/ira</em> passage isn't just a preface remark — it's the emotional architecture of the whole manuscript. Guards are theatrical (solaço), grappling plays are violent (ira), counters are dialectical.</div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-header">
+            <span class="mode-name">Autobiographical</span>
+            <span class="mode-count">33 passages</span>
+          </div>
+          <div class="mode-where">Preface only (fol. 1r–2r), then Fiore disappears</div>
+          <blockquote><a class="src-link" data-folio="01v" data-tab="hatcher" data-search="five times, for my honor">"Five times, for my honor, I was compelled to fight in strange places, without relatives and without friends, having no hope except in God, in my art, and in my sword."</a></blockquote>
+          <div class="mode-insight">Fiore front-loads all personal history then vanishes. The figures take over. The separation is deliberate: author-as-credentialed-expert (preface) vs. system-as-self-demonstrating (body). He fought five duels because envious masters challenged him — he won all five, unarmoured, with sharp swords.</div>
+        </div>
+
+      </div>
+
+      <p class="analysis-intro" style="margin-top: var(--lg);">
+        <strong>Fiore's contexts of combat.</strong> The Getty (fol. 2r) names <a class="src-link" data-folio="02r" data-tab="italian" data-search="come da solaço e di ira">two kinds</a>: <em>solaço</em> (pleasure — cooperative practice) and <em>ira</em> (anger — for one's life). Separately, in fol. 1r–1v, he discusses <em>sbarra</em> (the barriers — formal armoured combat, where <a class="src-link" data-folio="02r" data-tab="hatcher" data-search="rare that anyone dies">"it is rare that anyone dies"</a>) and contrasts it with unarmoured duelling with sharp swords, where <a class="src-link" data-folio="01v" data-tab="hatcher" data-search="single mistake in your defense">"a single mistake in your defense could cost you your life."</a> Critically, the barriers can themselves be <a class="src-link" data-folio="01r" data-tab="italian" data-search="starra a oltrança"><em>a oltrança</em></a> — to the death. So armour and rules don't eliminate lethality; they reduce it. Fiore teaches one system across all these contexts. When <a class="src-link" data-folio="01v" data-tab="hatcher" data-search="five times, for my honor">envious masters forced him to fight five times</a> — unarmoured, with sharp swords, in strange places — he proved it worked.
+      </p>
+
+      <!-- ── Coda ────────────────────────────────── -->
+      <div class="coda">
+        <p>
+          Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
+          Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
+          Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
+          OCR &amp; additional translation: Claude Vision, 2026.<br>
+          Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.<br>
+          <a href="about.html">About this project</a> — tools, sources, accuracy caveats, and lessons learned.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 4: About ─────────────────────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel" id="panel-about">
+    <div class="page" style="text-align: center; padding-top: var(--xxl);">
+      <p style="font-family: var(--font-ui); font-size: 1rem; color: var(--fg-muted); margin-bottom: var(--lg);">
+        Project background, tools, sources, accuracy caveats, and lessons learned.
+      </p>
+      <a href="about.html" style="font-family: var(--font-ui); font-size: 1.05rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-light);">
+        View full about page &rarr;
+      </a>
+
+      <!-- ── Coda ────────────────────────────────── -->
+      <div class="coda" style="margin: var(--xxl) auto 0; text-align: left;">
+        <p>
+          Manuscript images: J. Paul Getty Museum, Open Content Program (CC0).<br>
+          Italian transcriptions: Michael Chidester (CC BY-NC-SA 4.0) via Wiktenauer.<br>
+          Getty translation: Colin Hatcher. Morgan translation: Michael Chidester.<br>
+          OCR &amp; additional translation: Claude Vision, 2026.<br>
+          Part of the <a href="../timeline">GrapplingPrimitives History of Grappling</a> project.<br>
+          <a href="about.html">About this project</a> — tools, sources, accuracy caveats, and lessons learned.
+        </p>
+      </div>
     </div>
   </div>
 
   <script>
+    // ── Top-level tab switching ────────────────────
+    document.querySelectorAll('#navTabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#navTabs button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      });
+    });
+
     // ── Data loading ──────────────────────────────
-    // We load the comparison JSON inline (built by build_data.py)
     let DATA = null;
     let FOLIOS = [];
     let SECTIONS = {};
@@ -1077,9 +1121,7 @@
     function buildSectionNav(ms) {
       const nav = document.getElementById('sectionNav');
       nav.innerHTML = '';
-      // Use the canonical Getty section order as the master list
       const allNames = Object.keys(SECTIONS);
-      // Add any PD-only sections
       Object.keys(PD_SECTIONS).forEach(name => {
         if (!allNames.includes(name)) allNames.push(name);
       });
@@ -1132,11 +1174,10 @@
       const viewer = document.getElementById('folioViewer');
 
       // Update strip
-      document.querySelectorAll('.folio-strip button').forEach((btn, i) => {
+      document.querySelectorAll('#folioStrip button').forEach((btn, i) => {
         btn.classList.toggle('active', i === idx);
       });
-      // Scroll strip to active
-      const activeBtn = document.querySelector(`.folio-strip button[data-idx="${idx}"]`);
+      const activeBtn = document.querySelector(`#folioStrip button[data-idx="${idx}"]`);
       if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
       // Update section nav
@@ -1251,12 +1292,9 @@
     function formatText(text, isItalian) {
       if (!text) return '<div class="no-translation">No text available for this folio.</div>';
       let html = escapeHtml(text);
-      // Position labels
       html = html.replace(/^(Top-left|Top-right|Bottom-left|Bottom-right|Top|Bottom|Left|Right|Center-top|Center|Left label|Right label|Bottom-left label|Bottom-right label|Bottom-center):$/gm,
         '<span class="position-label">$1</span>');
-      // Paragraph markers
       html = html.replace(/\u00B6/g, '<span class="pilcrow">\u00B6</span>');
-      // Paragraphs
       html = html.replace(/\n\n+/g, '</p><p>');
       html = '<p>' + html + '</p>';
       return html;
@@ -1293,15 +1331,12 @@
       document.querySelectorAll('#msSwitcher button').forEach(b => b.classList.remove('active'));
       document.querySelector(`#msSwitcher [data-ms="${newMs}"]`).classList.add('active');
 
-      // Toggle folio strips and rebuild section nav
       document.getElementById('folioStrip').style.display = newMs === 'getty' ? '' : 'none';
       document.getElementById('pdFolioStrip').style.display = newMs === 'pd' ? '' : 'none';
       buildSectionNav(newMs);
 
-      // Show/hide d'amore detail
       document.getElementById('pdDetailFigure').style.display = newMs === 'pd' ? '' : 'none';
 
-      // Cross-navigate to equivalent folio
       if (wasMs === 'getty' && newMs === 'pd') {
         const gettyId = FOLIOS[currentFolio]?.id;
         const pdIds = GETTY_TO_PD[gettyId];
@@ -1309,7 +1344,6 @@
           const pdIdx = PD_FOLIOS.findIndex(f => f.id === pdIds[0]);
           if (pdIdx >= 0) { showPdFolio(pdIdx); return; }
         }
-        // No equivalent — show first PD folio
         if (PD_FOLIOS.length > 0) showPdFolio(currentPdFolio);
       } else if (wasMs === 'pd' && newMs === 'getty') {
         const pdFol = PD_FOLIOS[currentPdFolio];
@@ -1346,14 +1380,12 @@
       const fol = PD_FOLIOS[idx];
       const viewer = document.getElementById('folioViewer');
 
-      // Update strip
       document.querySelectorAll('#pdFolioStrip button').forEach((btn, i) => {
         btn.classList.toggle('active', i === idx);
       });
       const activeBtn = document.querySelector(`#pdFolioStrip button[data-idx="${idx}"]`);
       if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
-      // Update section nav
       document.querySelectorAll('.section-nav button').forEach(btn => {
         btn.classList.toggle('active', btn.textContent === fol.section);
       });
@@ -1424,13 +1456,12 @@
     }
 
     // ── Full-text search ───────────────────────────
-    const searchBar = document.getElementById('searchBar');
     const searchInput = document.getElementById('searchInput');
     const searchStatus = document.getElementById('searchStatus');
-    let searchResults = []; // [{folioIdx, tab, snippet}]
+    let searchResults = [];
     let searchCursor = -1;
 
-    // Cmd+K or Ctrl+K to open search
+    // Cmd+K or Ctrl+K to focus search
     document.addEventListener('keydown', e => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -1481,7 +1512,12 @@
         return;
       }
 
-      // Search across all folios (Getty + PD), all text fields
+      // Switch to manuscript panel when searching
+      document.querySelectorAll('#navTabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('#navTabs button[data-panel="manuscript"]').classList.add('active');
+      document.getElementById('panel-manuscript').classList.add('active');
+
       FOLIOS.forEach((fol, idx) => {
         if (fol.blank) return;
         const fields = [
@@ -1501,11 +1537,11 @@
           while (pos !== -1) {
             const start = Math.max(0, pos - 40);
             const end = Math.min(text.length, pos + q.length + 40);
-            const snippet = (start > 0 ? '…' : '') +
+            const snippet = (start > 0 ? '...' : '') +
               text.slice(start, pos) +
               '**' + text.slice(pos, pos + q.length) + '**' +
               text.slice(pos + q.length, end) +
-              (end < text.length ? '…' : '');
+              (end < text.length ? '...' : '');
             searchResults.push({ folioIdx: idx, tab, snippet, folioId: fol.id });
             pos = lower.indexOf(q, pos + 1);
           }
@@ -1528,7 +1564,6 @@
       const hit = searchResults[searchCursor];
       searchStatus.textContent = `${searchCursor + 1} / ${searchResults.length} — fol. ${hit.folioId} (${hit.tab})`;
 
-      // Navigate to that folio and tab, then highlight
       showFolio(hit.folioIdx);
       setTimeout(() => {
         const tabBtn = document.querySelector(`#transTabs button[data-tab="${hit.tab}"]`);
@@ -1564,7 +1599,6 @@
         }
       }
 
-      // Apply highlights (process in reverse to preserve offsets)
       for (const { node, idx, len } of replacements.reverse()) {
         const before = node.textContent.slice(0, idx);
         const match = node.textContent.slice(idx, idx + len);
@@ -1580,7 +1614,6 @@
         parent.replaceChild(frag, node);
       }
 
-      // Scroll first hit into view
       const first = panel.querySelector('.search-hit');
       if (first) {
         first.classList.add('search-hit-current');
@@ -1598,11 +1631,16 @@
 
     // ── Source link navigation ─────────────────────
     function goToSource(folioId, tab, searchText) {
+      // Switch to manuscript panel
+      document.querySelectorAll('#navTabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('#navTabs button[data-panel="manuscript"]').classList.add('active');
+      document.getElementById('panel-manuscript').classList.add('active');
+
       const idx = FOLIOS.findIndex(f => f.id === folioId);
       if (idx < 0) return;
       showFolio(idx);
 
-      // Switch to the right tab
       setTimeout(() => {
         const tabBtn = document.querySelector(`#transTabs button[data-tab="${tab}"]`);
         if (tabBtn) {
@@ -1612,22 +1650,18 @@
           const panel = document.getElementById('tab-' + tab);
           if (panel) panel.classList.add('active');
 
-          // Search and highlight
           if (searchText && panel) {
             highlightInPanel(panel, searchText);
           }
         }
-        // Scroll viewer into view
         document.getElementById('folioViewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
 
     function highlightInPanel(panel, searchText) {
-      // Normalize for matching
       const norm = s => s.toLowerCase().replace(/[''""]/g, "'").replace(/\s+/g, ' ').trim();
       const needle = norm(searchText);
 
-      // Walk text nodes
       const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
       let buf = '';
       let nodes = [];
@@ -1640,12 +1674,9 @@
       const pos = haystack.indexOf(needle);
       if (pos < 0) return;
 
-      // Find which text node(s) contain the match
       for (const { node, start } of nodes) {
-        const nodeText = norm(node.textContent);
         const nodeEnd = start + node.textContent.length;
         if (start <= pos && nodeEnd > pos) {
-          // This node contains (at least the start of) the match
           const parent = node.parentElement;
           if (parent) {
             parent.classList.add('highlight-flash');
@@ -1696,7 +1727,6 @@
           el.style.minHeight = editing ? '1em' : '';
         });
         if (editing) {
-          // Save on blur
           document.querySelectorAll(editableSelectors).forEach(el => {
             el.addEventListener('blur', saveAll);
           });
@@ -1704,14 +1734,15 @@
       });
 
       async function saveAll() {
-        // Grab the full innerHTML of the analysis section + header
         const sections = {};
-        const analysis = document.querySelector('.analysis-section');
+        const analysis = document.querySelector('#panel-analysis .page');
         if (analysis) sections.analysis = analysis.innerHTML;
         const epigraph = document.querySelector('.epigraph');
         if (epigraph) sections.epigraph = epigraph.innerHTML;
         const lead = document.querySelector('.lead');
         if (lead) sections.lead = lead.innerHTML;
+        const lexicon = document.querySelector('#panel-lexicon .page');
+        if (lexicon) sections.lexicon = lexicon.innerHTML;
 
         try {
           const resp = await fetch(SAVE_URL, {
@@ -1724,12 +1755,10 @@
             setTimeout(() => { editBtn.textContent = 'Editing (auto-saves)'; }, 800);
           }
         } catch(e) {
-          // Save server not running — fall back to clipboard
           console.log('Save server not available, copying to clipboard');
         }
       }
 
-      // Also support Ctrl+S to save
       document.addEventListener('keydown', e => {
         if (editing && e.key === 's' && (e.metaKey || e.ctrlKey)) {
           e.preventDefault();
@@ -1737,16 +1766,6 @@
         }
       });
     }
-
-    // ── Analysis panel tabs ─────────────────────
-    document.querySelectorAll('#analysisTabs button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#analysisTabs button').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.analysis-section .panel-content').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
-      });
-    });
 
     init();
   </script>
