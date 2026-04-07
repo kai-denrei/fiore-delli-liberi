@@ -203,7 +203,7 @@
 
     @media (min-width: 1100px) {
       .folio-viewer {
-        grid-template-columns: minmax(380px, 480px) 1fr;
+        grid-template-columns: 420px 1fr;
       }
     }
 
@@ -211,15 +211,12 @@
       position: sticky;
       top: var(--lg);
       align-self: start;
-      aspect-ratio: 1 / 1.44;
-      overflow: hidden;
-      background: var(--bg-panel);
+      width: 420px;
     }
 
     .folio-image-wrap img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: auto;
       border: 1px solid var(--rule);
       border-radius: 2px;
       cursor: zoom-in;
