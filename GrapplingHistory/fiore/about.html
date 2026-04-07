@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Fiore dei Liberi Reader</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #faf8f4; --fg: #2c2416; --fg-muted: #7a6f5f; --fg-faint: #b5ad9e;
+      --accent: #8b4513; --accent-light: #c4956a; --rule: #d6cfc2;
+      --bg-panel: #f2efe8;
+      --font-body: 'Spectral', Georgia, serif;
+      --font-ui: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+    html { font-size: 100%; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.65;
+      color: var(--fg); background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { max-width: 64ch; margin: 0 auto; padding: 4rem 2rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .back {
+      font-family: var(--font-ui); font-size: 0.8rem;
+      display: inline-block; margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.15; margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 1.1rem; font-style: italic; color: var(--fg-muted);
+      margin-bottom: 2rem;
+    }
+    hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+    h2 {
+      font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted);
+      margin: 2.5rem 0 0.75rem;
+    }
+    p { margin-bottom: 1rem; }
+    ul { margin: 0 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    .tool-grid {
+      display: grid; grid-template-columns: 1fr; gap: 0;
+      border-top: 1px solid var(--rule); margin: 1rem 0 2rem;
+    }
+    .tool-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      gap: 1.5rem; padding: 0.6rem 0; border-bottom: 1px solid var(--rule);
+    }
+    @media (max-width: 600px) { .tool-row { grid-template-columns: 1fr; gap: 0.3rem; } }
+    .tool-name {
+      font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+      color: var(--fg);
+    }
+    .tool-desc { font-size: 0.9rem; color: var(--fg-muted); }
+    .ref-list { list-style: none; margin-left: 0; }
+    .ref-list li {
+      padding: 0.5rem 0; border-bottom: 1px solid var(--rule);
+      font-size: 0.9rem;
+    }
+    .ref-list .ref-tag {
+      font-family: var(--font-ui); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      display: inline-block; padding: 1px 5px; border-radius: 2px;
+      margin-right: 0.4rem;
+    }
+    .ref-tag.ms { background: #e8ddd0; color: #6b5a45; }
+    .ref-tag.trans { background: #d0dde8; color: #45576b; }
+    .ref-tag.tool { background: #dde8d0; color: #576b45; }
+    .ref-tag.license { background: #e8d0d0; color: #6b4545; }
+    code {
+      font-family: var(--font-mono); font-size: 0.88em;
+      background: var(--bg-panel); padding: 1px 4px; border-radius: 2px;
+    }
+    .coda {
+      border-top: 2px solid var(--rule); margin-top: 3rem; padding-top: 1.5rem;
+      font-family: var(--font-ui); font-size: 0.78rem; color: var(--fg-muted);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page">
+
+    <a href="index.html" class="back">&larr; Back to reader</a>
+
+    <h1>About This Project</h1>
+    <p class="subtitle">How this manuscript reader was built, what tools were used, and where the source material comes from.</p>
+
+    <hr>
+
+    <h2>What This Is</h2>
+    <p>
+      An interactive reader for the <em>Fior di Battaglia</em> ("Flower of Battle") by Fiore dei Liberi, c. 1410 &mdash; a medieval Italian combat treatise covering grappling, dagger, sword, poleaxe, spear, and mounted combat. The primary source is the Getty MS Ludwig XV 13, the most complete of four surviving manuscripts.
+    </p>
+    <p>
+      This reader was built as the proof-of-concept node for a <strong>History of Grappling</strong> interactive timeline, part of the GrapplingPrimitives project. It is intended to demonstrate a repeatable pipeline: primary source images &rarr; transcription &rarr; multi-source translation comparison &rarr; interactive reader with lexicon and analysis.
+    </p>
+
+    <h2>How It Was Built</h2>
+    <p>
+      This project was built almost entirely in a single session using <strong><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a></strong> (Anthropic's CLI agent, running Claude Opus), directed by a human collaborator. The human provided the project brief, editorial judgement, source material references, domain expertise in grappling history, and critical review of all AI-generated content &mdash; including catching fabricated quotes and false attributions.
+    </p>
+
+    <h2>Pipeline</h2>
+
+    <div class="tool-grid">
+      <div class="tool-row">
+        <div class="tool-name">Getty IIIF API</div>
+        <div class="tool-desc">Fetched the IIIF v2 manifest for MS Ludwig XV 13, downloaded all 94 canvas images at full resolution (3117&times;4485 px). Script: <code>src/scraper/getty_iiif.py</code></div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Claude Vision OCR</div>
+        <div class="tool-desc">8 parallel Claude agents read the manuscript images directly and produced per-folio transcriptions (Middle Italian) + translations (English). 92 files in ~7 minutes. QA showed this is unreliable for the illustration captions (guard names wrong, technique instructions garbled) but usable for the dense prose prologue pages.</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Wiktenauer Scrape</div>
+        <div class="tool-desc">Fetched the raw MediaWiki markup from the Fiore de'i Liberi author page (460 KB wikitext, 1.7 MB rendered HTML). Parsed the 8-column concordance table to extract Hatcher and Chidester English translations aligned with Getty folio references. Script: <code>src/scraper/parse_wiktenauer.py</code></div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">PDF Extraction</div>
+        <div class="tool-desc">Downloaded the Wiktenauer 2016 concordance PDF (15 MB, 532 pages) from Hroarr.com. Used <code>pdftotext</code> for text extraction. Used as a QA reference to verify our Wiktenauer parse against the canonical print compilation.</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">PD Italian Extract</div>
+        <div class="tool-desc">Extracted the Pisani Dossi (1409) Italian text from the rendered Wiktenauer HTML &mdash; Novati's 1902 facsimile transcription, re-transcribed by Michael Chidester. Mapped PD folio references to approximate Getty equivalents. Script: <code>src/scraper/extract_pd_italian.py</code></div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">WebP Conversion</div>
+        <div class="tool-desc">Converted 94 full-res JPEGs (341 MB) to 1200px-wide WebP (17 MB) using <code>cwebp</code> (libwebp). Originals retained locally, web-optimized versions in the repository.</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Static Page</div>
+        <div class="tool-desc">Single <code>index.html</code> file (68 KB) with inline CSS/JS, no build step, no framework. Loads <code>data.json</code> (536 KB) at runtime. Typography follows mise-en-page principles: Spectral serif for body, Inter for UI, 64ch measure, tiered spacing.</div>
+      </div>
+    </div>
+
+    <h2>What Claude Did vs. What the Human Did</h2>
+
+    <p><strong>Claude</strong> (via Claude Code CLI):</p>
+    <ul>
+      <li>Wrote all scraping, parsing, and build scripts</li>
+      <li>Performed the OCR pass on all 92 folios (8 parallel agents)</li>
+      <li>Parsed the Wiktenauer wikitext and extracted translations</li>
+      <li>Built the HTML/CSS/JS reader page</li>
+      <li>Wrote the initial lexicon entries and sentiment analysis</li>
+      <li>Generated the text analysis statistics</li>
+      <li>Managed the git repository and deployment</li>
+    </ul>
+
+    <p><strong>The human</strong> (Gerald / Jelaludo):</p>
+    <ul>
+      <li>Provided the project brief and domain expertise in grappling history</li>
+      <li>Directed the overall architecture and editorial priorities</li>
+      <li>Identified and provided reference translations (Hatcher, Chidester)</li>
+      <li>Caught fabricated quotes &mdash; Claude synthesized "prese d'amore" as a Getty term when it only appears in the Pisani Dossi; invented a "three tiers of violence" framework that oversimplified what Fiore actually wrote</li>
+      <li>Caught false attributions &mdash; quotes from different folios and manuscripts stitched together to appear as a unified argument</li>
+      <li>Provided the Sbarra watercolor illustration</li>
+      <li>Edited lexicon entries for accuracy via the in-browser edit mode</li>
+      <li>Insisted on the search feature to verify claims against source text</li>
+      <li>Defined the vocabulary mapping (solaço/ira, sbarra, oltrança, etc.) with corrections to ensure no editorial invention was presented as Fiore's words</li>
+    </ul>
+
+    <h2>Accuracy Caveats</h2>
+    <ul>
+      <li><strong>Claude Vision OCR</strong> of the illustration pages is unreliable. Guard names, technique instructions, and tactical logic are frequently garbled. The Hatcher/Chidester scholarly translations should be treated as authoritative; the "Raw OCR" tab is a first-pass reference only.</li>
+      <li><strong>Prologue OCR</strong> (fol. 1r, 2r, 4r) is substantially better, having been cross-referenced against existing OCR work. Still not scholarly-grade.</li>
+      <li><strong>Folio-to-section mapping</strong> is approximate, based on the Wiktenauer concordance and manuscript structure. Some boundary folios may be miscategorized.</li>
+      <li><strong>Pisani Dossi &harr; Getty alignment</strong> is approximate. The two manuscripts have different structures and the PD is a condensed redaction. Mapping is based on concordance table co-occurrence, not scholarly apparatus.</li>
+      <li><strong>The lexicon and analysis sections</strong> contain editorial interpretation, clearly marked. Every quoted passage links to its source folio and tab for verification. If a claim cannot be verified by clicking its source link, treat it with skepticism.</li>
+    </ul>
+
+    <h2>Sources &amp; References</h2>
+    <ul class="ref-list">
+      <li>
+        <span class="ref-tag ms">Manuscript</span>
+        <strong>MS Ludwig XV 13</strong> &mdash; J. Paul Getty Museum, Los Angeles. <em>Fior di Battaglia</em> by Fiore dei Liberi, c. 1400&ndash;1410. 47 folios. Digital images via the Getty Open Content Program (CC0).
+        <br><a href="https://www.getty.edu/art/collection/object/103RW1">getty.edu/art/collection/object/103RW1</a>
+      </li>
+      <li>
+        <span class="ref-tag ms">Manuscript</span>
+        <strong>Pisani Dossi MS</strong> &mdash; Private collection. <em>Flos Duellatorum</em> by Fiore dei Liberi, dated February 10, 1409. Facsimile published by Francesco Novati, 1902. Italian transcription by Michael Chidester via Wiktenauer.
+      </li>
+      <li>
+        <span class="ref-tag ms">Manuscript</span>
+        <strong>MS M.383</strong> &mdash; Morgan Library &amp; Museum, New York. <em>Fior di Battaglia</em> by Fiore dei Liberi, c. 1400s. English translation by Michael Chidester via Wiktenauer.
+      </li>
+      <li>
+        <span class="ref-tag trans">Translation</span>
+        <strong>Colin Hatcher</strong> &mdash; English translation of the Getty MS and portions of the Pisani Dossi MS. Published via Wiktenauer (CC BY-NC-SA 4.0).
+        <br><a href="http://www.fioredeiliberi.org/getty/">fioredeiliberi.org/getty</a>
+      </li>
+      <li>
+        <span class="ref-tag trans">Translation</span>
+        <strong>Michael Chidester</strong> &mdash; English translation of the Morgan MS. Italian transcriptions of the Getty, Morgan, and Pisani Dossi MSS. Published via Wiktenauer (CC BY-NC-SA 4.0).
+        <br><a href="https://wiktenauer.com/wiki/Fiore_de%27i_Liberi">wiktenauer.com/wiki/Fiore_de'i_Liberi</a>
+      </li>
+      <li>
+        <span class="ref-tag trans">Compilation</span>
+        <strong>Wiktenauer Concordance PDF</strong> (v3.2, 2016) &mdash; Edited by Michael Chidester. Translations by Kendra Brown, Michael Chidester, Rebecca Garber, Colin Hatcher, and Guy Windsor. 532 pages.
+        <br><a href="https://hroarr.com">hroarr.com</a> (CC BY-NC-SA 4.0)
+      </li>
+      <li>
+        <span class="ref-tag tool">Tool</span>
+        <strong>Claude Code</strong> &mdash; Anthropic's CLI agent (Claude Opus 4.6, 1M context). Used for all scripting, OCR, parsing, page construction, and deployment.
+        <br><a href="https://docs.anthropic.com/en/docs/claude-code">docs.anthropic.com/en/docs/claude-code</a>
+      </li>
+      <li>
+        <span class="ref-tag tool">Tool</span>
+        <strong>Getty IIIF API</strong> &mdash; International Image Interoperability Framework. Manifest v2 for MS Ludwig XV 13.
+        <br><code>media.getty.edu/iiif/manifest/928f4025-a697-4b9f-b5ee-9a5d7e15a6ff</code>
+      </li>
+      <li>
+        <span class="ref-tag tool">Tool</span>
+        <strong>Wiktenauer</strong> &mdash; The free library of Historical European Martial Arts books and manuscripts. A project of the HEMA Alliance (501(c)(3)).
+        <br><a href="https://wiktenauer.com">wiktenauer.com</a>
+      </li>
+      <li>
+        <span class="ref-tag license">License</span>
+        <strong>Getty manuscript images:</strong> CC0 (public domain) via Open Content Program.
+      </li>
+      <li>
+        <span class="ref-tag license">License</span>
+        <strong>Wiktenauer translations &amp; transcriptions:</strong> CC BY-NC-SA 4.0. Hatcher (Getty + PD grappling/baton/dagger), Chidester (Morgan + PD + transcriptions), Brown &amp; Garber (Paris).
+      </li>
+      <li>
+        <span class="ref-tag license">License</span>
+        <strong>Novati PD transcription (1902):</strong> Public domain.
+      </li>
+    </ul>
+
+    <h2>Lessons Learned</h2>
+    <ul>
+      <li><strong>Vision OCR on medieval script is not reliable for short captions.</strong> Claude reads the dense prose prologue pages reasonably well but fails on the illustration captions — the 15th-century Venetian cursive hand defeats the model. Scholarly transcriptions remain essential.</li>
+      <li><strong>AI confidently fabricates scholarly synthesis.</strong> Claude stitched quotes from different manuscripts and folios into unified arguments, invented the term "prese d'amore" as if it were a Getty concept, and constructed a "three tiers of violence" framework that oversimplified Fiore's actual distinctions. Every claim needs source verification.</li>
+      <li><strong>The search feature was the most important addition.</strong> The human insisted on it specifically to verify AI claims against source text. It caught multiple errors that would have shipped otherwise. If you're building a scholarly interface with AI assistance, build the verification tool first.</li>
+      <li><strong>Different manuscripts by the same author use different words for the same concepts.</strong> The Getty says <em>solaço</em> where the Pisani Dossi says <em>d'amore</em>. This isn't just a variant spelling &mdash; it may reflect evolving thought across the ~decade separating the manuscripts. Multi-manuscript comparison is not optional.</li>
+    </ul>
+
+    <div class="coda">
+      <p>
+        Built April 2026 by Gerald (Jelaludo) and Claude Code.<br>
+        Repository: <a href="https://github.com/kai-denrei/fiore-delli-liberi">github.com/kai-denrei/fiore-delli-liberi</a><br>
+        Part of the <a href="../GrapplingPrimitives_History_Plan.md">GrapplingPrimitives History of Grappling</a> project.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
