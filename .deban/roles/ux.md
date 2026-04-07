@@ -20,6 +20,7 @@ Design of the interactive reader page — the Fiore node of the GrapplingPrimiti
 | 2026-04-07 | Source-linked quotes throughout lexicon and analysis | Every quoted passage is a clickable link that navigates to the folio, switches to the correct tab, and highlights the match. Establishes trust in editorial claims. | [[qa]] |
 | 2026-04-07 | Mise-en-page typography: Spectral serif, Inter UI, 64ch measure | Following the mise-en-page skill principles. Tiered spacing, pilcrow marks colored, position labels in faint uppercase. Manuscript images carry the visual weight. | [[arch]] |
 | 2026-04-07 | Images normalized to identical 1200x1727px | Both manuscripts render at same size in same container. PD images padded with background color to match Getty aspect ratio. Zero layout shift on MS switch. | [[dev]] |
+| 2026-04-07 | Mobile responsiveness pass | Nav tabs scroll horizontally on mobile, search shrinks. Image column uses max-width (not fixed width). Translation tabs horizontal scroll. Folio strip bigger touch targets. Lexicon/mode cards single column. text-wrap:pretty + hyphens:auto on prose. Headlines scale down. About page tighter padding. | [[dev]] |
 
 ## Dead Ends
 <!-- APPEND ONLY. Never delete. -->
@@ -42,5 +43,6 @@ Feeds into: nothing (terminal)
 
 ## Session Log
 <!-- One line per session, newest first -->
+2026-04-07 — SYNC — Mobile responsiveness pass. Nav, tabs, images, folio strip, lexicon, mode cards all responsive. text-wrap:pretty added.
 2026-04-07 — SYNC — Full UX shipped. 5-tab reader, dual MS viewer, permanent search, source-linked quotes, normalized images, all-tabs-always-visible layout. Deployed to GitHub Pages.
 2026-04-07 — INIT — role created
