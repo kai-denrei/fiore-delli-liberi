@@ -755,7 +755,6 @@
 
     /* Small phones */
     @media (max-width: 400px) {
-      .site-nav .nav-title { font-size: 0.72rem; }
       .site-nav .nav-search input { width: 70px; }
       .headline { font-size: 1.5rem; }
     }
@@ -770,10 +769,6 @@
       display: flex; align-items: center; gap: var(--md);
       max-width: calc(var(--measure) + var(--margin-w) + var(--gutter));
       margin: 0 auto; padding: 0 var(--lg);
-    }
-    .site-nav .nav-title {
-      font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600;
-      color: var(--fg); text-decoration: none; white-space: nowrap;
     }
     .site-nav .nav-tabs { display: flex; gap: 0; }
     .site-nav .nav-tabs button {
@@ -832,11 +827,11 @@
   <!-- ── Site Navigation ──────────────────────────── -->
   <nav class="site-nav">
     <div class="site-nav-inner">
-      <a class="nav-title" href="#">Fiore dei Liberi</a>
       <div class="nav-tabs" id="navTabs">
-        <button class="active" data-panel="manuscript">Manuscript</button>
+        <button class="active" data-panel="manuscript">Home</button>
         <button data-panel="lexicon">Lexicon</button>
-        <button data-panel="analysis">Analysis</button>
+        <button data-panel="analysis">AI</button>
+        <button data-panel="attributes">8-Skills</button>
         <button data-panel="amore">Amore</button>
         <button data-panel="about">About</button>
       </div>
@@ -855,6 +850,8 @@
   <!-- ══════════════════════════════════════════════ -->
   <div class="page-panel active" id="panel-manuscript">
     <div class="page">
+
+      <h1 style="font-family: var(--font-body); font-size: 2rem; font-weight: 700; margin-bottom: var(--lg); color: var(--fg);">Fiore dei Liberi</h1>
 
       <!-- ── Epigraph ────────────────────────────── -->
       <div class="epigraph">
@@ -1164,7 +1161,164 @@
   </div>
 
   <!-- ══════════════════════════════════════════════ -->
-  <!-- ── Panel 4: Amore ──────────────────────────── -->
+  <!-- ── Panel 4: Attributes ────────────────────── -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="page-panel" id="panel-attributes">
+    <div class="page">
+
+      <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: var(--sm);">The Attributes of Grappling</h2>
+      <p class="analysis-intro">
+        Before the first play, Fiore lists what grappling requires. The Getty manuscript names eight attributes; the Pisani Dossi compresses them to seven. Comparing the two lists reveals how Fiore organized his thinking about the discipline&mdash;and how closely his categories map to modern grappling pedagogy.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid var(--rule); margin: var(--lg) 0;">
+
+      <!-- ── Getty: 8 attributes ──────────────── -->
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">Getty MS Ludwig XV 13 &mdash; Folio 2r &rarr; 4r</h3>
+
+      <div class="epigraph" style="margin: var(--md) 0 var(--lg);">
+        <blockquote>
+          L'abra&ccedil;are uole auere .viij. chose. Coe forte&ccedil;a, preste&ccedil;a, sauere coe sauer preste auantagiade, sauere far roture coe romper braci e &ccedil;ambe, sauer ligadure coe ligar braci in modo che l'homo non habia piu defesa ne se possa partire in sua liberta. Sauere ferrire in luogo piu pericoloso. Anchora sauer mettere uno in terra sen&ccedil;a periculo di si instesso. Anchora sauer dislagar braci e &ccedil;ambi per diuersi modi.
+        </blockquote>
+        <div class="attribution">
+          "Grappling requires <strong>eight</strong> things. That is: [1] strength, [2] speed, [3] knowledge&mdash;that is, knowing superior holds; [4] knowing how to break apart arms and legs; [5] knowing locks, that is how to bind the arms of a man so as to render him powerless; [6] knowing how to strike to the most vulnerable points; [7] knowing how to throw someone to the ground without danger to yourself; and [8] knowing how to dislocate arms and legs in various ways."
+          <br><span style="font-size: 0.78rem; color: var(--fg-faint);">Hatcher translation of Getty fol. 2r&ndash;4r</span>
+        </div>
+      </div>
+
+      <!-- ── PD: 7 attributes ─────────────────── -->
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">Pisani Dossi MS &mdash; Carta 2a</h3>
+
+      <div class="epigraph" style="margin: var(--md) 0 var(--lg);">
+        <blockquote>
+          Lo abra&ccedil;ar vole &#8550; cosse zoe forte&ccedil;a preste&ccedil;a de pie, e de bra&ccedil;i, e prese avanta&ccedil;ade, e roture, e ligadure, e percusion, e lesion segondo che voii vederiti in le figure dipente e masimamente in &ccedil;oghi che se guadagnano le prese zaschun cum suo saver e cum sua malitia.
+        </blockquote>
+        <div class="attribution">
+          "Grappling wants <strong>seven</strong> things&mdash;that is, [1] strength; [2] quickness of foot and of arms; [3] advantageous holds; and [4] breaks; and [5] binds; and [6] strikes; and [7] lesions; following that which you will see in the painted figures, and especially in plays that will gain holds, each one with its knowledge and with its malice."
+          <br><span style="font-size: 0.78rem; color: var(--fg-faint);">Hatcher translation of PD carta 2a &middot; Novati 1902 facsimile</span>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--rule); margin: var(--lg) 0;">
+
+      <!-- ── Comparison table ─────────────────── -->
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">Mapping: Fiore &rarr; Modern Grappling</h3>
+
+      <div style="overflow-x: auto;">
+        <table style="font-family: var(--font-ui); font-size: 0.85rem; border-collapse: collapse; width: 100%; margin-bottom: var(--lg);">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--rule-heavy);">
+              <th style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600; width: 2rem;">#</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Getty (8)</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">PD (7)</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Italian</th>
+              <th style="text-align: left; padding: var(--sm) var(--md); color: var(--fg-muted); font-weight: 600;">Modern Equivalent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">1</td>
+              <td style="padding: var(--sm) var(--md);">Strength</td>
+              <td style="padding: var(--sm) var(--md);">Strength</td>
+              <td style="padding: var(--sm) var(--md);"><em>forte&ccedil;a</em></td>
+              <td style="padding: var(--sm) var(--md);">Physical attributes&mdash;grip strength, frames, pressure. The base layer every grappling system trains.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">2</td>
+              <td style="padding: var(--sm) var(--md);">Speed</td>
+              <td style="padding: var(--sm) var(--md);">Quickness of foot and of arms</td>
+              <td style="padding: var(--sm) var(--md);"><em>preste&ccedil;a</em> (Getty) /<br><em>preste&ccedil;a de pie, e de bra&ccedil;i</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Footwork, level changes, sprawls (feet) + hand fighting, grip speed, snap-downs (arms). The PD splits what the Getty leaves as one word.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">3</td>
+              <td style="padding: var(--sm) var(--md);">Knowledge of superior holds</td>
+              <td style="padding: var(--sm) var(--md);">Advantageous holds</td>
+              <td style="padding: var(--sm) var(--md);"><em>sauere preste auantagiade</em> (Getty) /<br><em>prese avanta&ccedil;ade</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Positional dominance&mdash;mount, back control, underhooks. Not just any hold: specifically <em>advantageous</em> ones. The concept of positional hierarchy.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">4</td>
+              <td style="padding: var(--sm) var(--md);">Breaking arms and legs</td>
+              <td style="padding: var(--sm) var(--md);">Breaks</td>
+              <td style="padding: var(--sm) var(--md);"><em>roture / romper braci e &ccedil;ambe</em> (Getty) /<br><em>roture</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Structural destruction. <em>Romper</em> means to break, shatter, rupture. The Getty is explicit: <em>romper braci e &ccedil;ambe</em>&mdash;break arms and legs. Not joint locks applied for submission, but the breaking itself. In modern terms: the armbar carried past the tap, the leg lock finished. Fiore also uses <em>roture</em> for breaking grips and breaking posture&mdash;disrupting an opponent&rsquo;s structure at any scale.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">5</td>
+              <td style="padding: var(--sm) var(--md);">Locks / binding arms</td>
+              <td style="padding: var(--sm) var(--md);">Binds</td>
+              <td style="padding: var(--sm) var(--md);"><em>ligadure / ligar braci</em> (Getty) /<br><em>ligadure</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Ties and controls&mdash;body locks, seatbelt, arm ties, leg entanglements. Distinct from holds (where you are) and breaks (destroying structure): binds <em>constrain</em> without finishing.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">6</td>
+              <td style="padding: var(--sm) var(--md);">Striking vulnerable points</td>
+              <td style="padding: var(--sm) var(--md);">Strikes</td>
+              <td style="padding: var(--sm) var(--md);"><em>ferrire in luogo piu pericoloso</em> (Getty) /<br><em>percusion</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Strikes within grappling&mdash;elbows, headbutts, palm strikes to create openings. The Getty specifies <em>the most dangerous places</em>; the PD uses the general term <em>percusion</em>.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">7</td>
+              <td style="padding: var(--sm) var(--md);">Throwing to ground safely</td>
+              <td rowspan="2" style="padding: var(--sm) var(--md); vertical-align: middle; border-left: 3px solid var(--accent-light);">Lesions</td>
+              <td style="padding: var(--sm) var(--md);"><em>mettere uno in terra</em></td>
+              <td style="padding: var(--sm) var(--md);">Takedowns and throws&mdash;executed <em>sen&ccedil;a periculo di si instesso</em> (without danger to yourself). Modern: hip throws, trips, body-lock takedowns.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--rule);">
+              <td style="text-align: center; padding: var(--sm) var(--md); color: var(--fg-faint);">8</td>
+              <td style="padding: var(--sm) var(--md);">Dislocating arms and legs</td>
+              <td style="padding: var(--sm) var(--md);"><em>dislagar braci e &ccedil;ambi</em> (Getty) /<br><em>lesion</em> (PD)</td>
+              <td style="padding: var(--sm) var(--md);">Where <em>roture</em> (4) is breaking a limb at the joint, <em>dislagar</em> is pulling it <em>out</em> of the joint&mdash;dislocation. The Getty specifies <em>dislagar braci e &ccedil;ambi per diuersi modi</em>: dislocating arms and legs <em>by various methods</em>. Shoulders wrenched from sockets, knees hyperextended sideways, fingers bent wrong. The PD collapses throws (7) + dislocations (8) into a single word: <em>lesion</em>*&mdash;naming the outcome, not the method. These are the plays that <em>non se po &ccedil;ugar de cortesia</em>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-family: var(--font-ui); font-size: 0.78rem; color: var(--fg-faint); line-height: 1.5; margin-bottom: var(--lg);">
+        * <em>Lesion</em> from Latin <em>laesionem</em> (nominative <em>laesio</em>), meaning &ldquo;a hurting, injuring, or wounding.&rdquo; Entered English in the early 15th century via Old French <em>lesion</em>&mdash;contemporary with Fiore&rsquo;s own manuscripts. The word names the wound, not the weapon.
+      </p>
+
+      <!-- ── Analysis note ────────────────────── -->
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">What Changed Between Manuscripts</h3>
+
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        The Getty expands and explains: each attribute gets a clause defining what it means (<em>sauere far roture coe romper braci e &ccedil;ambe</em>&mdash;"knowing how to make breaks, that is, breaking arms and legs"). The PD compresses to single nouns: <em>roture, ligadure, percusion, lesion</em>. A teacher's glossary versus a practitioner's shorthand.
+      </p>
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        The most significant compression: Getty&rsquo;s items 7 and 8&mdash;throwing (<em>mettere in terra</em>) and dislocating (<em>dislagar</em>)&mdash;collapse into a single PD term, <em>lesion</em>. This suggests Fiore came to see throws and dislocations as two methods with a common purpose: causing bodily harm. The word <em>lesion</em> names the outcome, not the technique.
+      </p>
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        The PD also adds <em>preste&ccedil;a de pie, e de bra&ccedil;i</em> where the Getty has only <em>preste&ccedil;a</em>. Speed gets more specific, not less&mdash;even as the list gets shorter overall.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid var(--rule); margin: var(--lg) 0;">
+
+      <h3 style="font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: var(--md);">A Modern Taxonomy</h3>
+
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--md);">
+        Read as a curriculum, Fiore&rsquo;s list is remarkably complete. A modern grappling coach would recognise every category: physical conditioning (1&ndash;2), positional strategy (3), submissions (4), control (5), striking integration (6), takedowns (7), and injurious finishing techniques (8). The ordering itself is pedagogical&mdash;attributes before techniques, control before destruction, safe practice before lethal application.
+      </p>
+      <p style="font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--lg);">
+        What no modern curriculum includes is Fiore&rsquo;s explicit acknowledgment that some of these attributes <em>cannot be trained cooperatively</em>. The passage immediately following the seven/eight attributes introduces the <em>concordia/amore/ira/per la vita</em> spectrum&mdash;the subject of the <a href="#" onclick="document.querySelector('[data-panel=amore]').click(); return false;">Amore</a> tab.
+      </p>
+
+      <!-- ── Coda ────────────────────────────── -->
+      <div class="coda">
+        <p>
+          Getty Italian: MS Ludwig XV 13, J. Paul Getty Museum (CC0), fol. 2r&ndash;4r.<br>
+          PD Italian: Novati 1902 facsimile of the 1409 manuscript, carta 2a.<br>
+          Translations: Colin Hatcher (CC BY-NC-SA 4.0).<br>
+          <a href="about.html">About this project</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- ── Panel 5: Amore ──────────────────────────── -->
+  <!-- (was Panel 4 before Attributes tab added) -->
   <!-- ══════════════════════════════════════════════ -->
   <div class="page-panel" id="panel-amore">
     <div class="page">
